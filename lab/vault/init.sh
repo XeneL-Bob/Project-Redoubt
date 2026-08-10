@@ -26,7 +26,7 @@ vault write auth/approle/role/finance-api \
     token_policies="finance-api" \
     token_ttl="15m" \
     token_max_ttl="30m" \
-    secret_id_ttl="30m" \
+    secret_id_ttl="0" \
     secret_id_num_uses="0" \
     >/dev/null
 
