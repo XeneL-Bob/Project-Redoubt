@@ -49,6 +49,23 @@ services:
       - employee_net
       - finance_net
 
+  detection:
+    build:
+      context: ./detection
+    user: "${HOST_UID}:${HOST_GID}"
+    environment:
+      EVENTS_FILE: /data/security-events.jsonl
+      ALERTS_FILE: /data/security-alerts.jsonl
+      STATE_FILE: /data/detection-state.json
+      RULES_FILE: /app/rules.json
+    volumes:
+      - ../evidence/runtime:/data
+    network_mode: none
+    depends_on:
+      telemetry:
+        condition: service_started
+    restart: unless-stopped
+
   vault:
     image: hashicorp/vault:2.0.3
     command:

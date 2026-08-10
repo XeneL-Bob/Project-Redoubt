@@ -1,4 +1,5 @@
 import os
+import uuid
 from typing import Any
 
 import httpx
@@ -35,6 +36,7 @@ async def emit_event(
     subject: str | None = None,
     resource: str | None = None,
     details: dict[str, Any] | None = None,
+    correlation_id: str | None = None,
 ) -> None:
     payload = {
         "source": "gateway",
@@ -42,6 +44,7 @@ async def emit_event(
         "outcome": outcome,
         "subject": subject,
         "resource": resource,
+        "correlation_id": correlation_id,
         "details": details or {},
     }
 
@@ -110,6 +113,7 @@ async def authorize(
     resource: str,
     action: str,
     device_trusted: bool,
+    correlation_id: str,
 ) -> None:
     username = claims.get("preferred_username", "unknown")
     roles = claims.get("realm_access", {}).get("roles", [])
@@ -148,6 +152,7 @@ async def authorize(
             username,
             resource,
             {"error": type(exc).__name__},
+            correlation_id,
         )
 
         # Fail closed if the Policy Decision Point is unavailable.
@@ -169,6 +174,7 @@ async def authorize(
             "roles": roles,
             "reason": decision.get("reason"),
         },
+        correlation_id,
     )
 
     if not allowed:
@@ -182,10 +188,12 @@ async def call_backend(
     url: str,
     username: str,
     gateway_token: str,
+    correlation_id: str,
 ) -> dict[str, Any]:
     headers = {
         "X-Redoubt-Gateway-Token": gateway_token,
         "X-Redoubt-User": username,
+        "X-Redoubt-Correlation-ID": correlation_id,
     }
 
     async with httpx.AsyncClient(timeout=5.0) as client:
@@ -217,18 +225,21 @@ async def employee_profile(
     claims = validate_token(token)
 
     trusted = x_device_trusted.lower() == "true"
+    correlation_id = str(uuid.uuid4())
 
     await authorize(
         claims,
         resource="employee-api",
         action="read",
         device_trusted=trusted,
+        correlation_id=correlation_id,
     )
 
     return await call_backend(
         f"{EMPLOYEE_API_URL}/profile",
         claims.get("preferred_username", "unknown"),
         GATEWAY_EMPLOYEE_TOKEN,
+        correlation_id,
     )
 
 
@@ -241,16 +252,19 @@ async def finance_summary(
     claims = validate_token(token)
 
     trusted = x_device_trusted.lower() == "true"
+    correlation_id = str(uuid.uuid4())
 
     await authorize(
         claims,
         resource="finance-api",
         action="read",
         device_trusted=trusted,
+        correlation_id=correlation_id,
     )
 
     return await call_backend(
         f"{FINANCE_API_URL}/summary",
         claims.get("preferred_username", "unknown"),
         GATEWAY_FINANCE_TOKEN,
+        correlation_id,
     )

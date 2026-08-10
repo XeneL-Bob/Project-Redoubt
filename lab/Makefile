@@ -1,6 +1,6 @@
 COMPOSE=docker compose --env-file .env -f compose.yaml
 
-.PHONY: validate build up ps logs policy-test segmentation-test test down reset
+.PHONY: validate build up ps logs policy-test segmentation-test detection-test test down reset
 
 validate:
 	$(COMPOSE) config -q
@@ -23,9 +23,13 @@ policy-test:
 segmentation-test:
 	./tests/segmentation-test.sh
 
+detection-test:
+	./tests/detection-test.sh
+
 test:
 	./tests/smoke.sh
 	./tests/segmentation-test.sh
+	./tests/detection-test.sh
 
 down:
 	$(COMPOSE) down

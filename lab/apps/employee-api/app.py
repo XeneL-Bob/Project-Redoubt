@@ -26,13 +26,16 @@ def validate_gateway(token: str | None) -> None:
 async def emit_event(
     outcome: str,
     subject: str,
+    correlation_id: str | None = None,
+    event_type: str = "application_access",
 ) -> None:
     payload: dict[str, Any] = {
         "source": "employee-api",
-        "event_type": "application_access",
+        "event_type": event_type,
         "outcome": outcome,
         "subject": subject,
         "resource": "employee-api",
+        "correlation_id": correlation_id,
         "details": {},
     }
 
@@ -58,10 +61,26 @@ async def health():
 async def profile(
     x_redoubt_gateway_token: str | None = Header(default=None),
     x_redoubt_user: str = Header(default="unknown"),
+    x_redoubt_correlation_id: str | None = Header(default=None),
 ):
-    validate_gateway(x_redoubt_gateway_token)
+    if x_redoubt_gateway_token != GATEWAY_EMPLOYEE_TOKEN:
+        await emit_event(
+            "deny",
+            x_redoubt_user,
+            x_redoubt_correlation_id,
+            "direct_backend_access_denied",
+        )
 
-    await emit_event("allow", x_redoubt_user)
+        raise HTTPException(
+            status_code=403,
+            detail="Direct workload access denied",
+        )
+
+    await emit_event(
+        "allow",
+        x_redoubt_user,
+        x_redoubt_correlation_id,
+    )
 
     return {
         "application": "employee-api",
