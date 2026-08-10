@@ -1,0 +1,113 @@
+{
+  "schema_version": "1.0",
+  "rules": [
+    {
+      "id": "DET-001",
+      "title": "Restricted Finance Resource Access Denied",
+      "description": "Authenticated subject denied access to the restricted Finance API.",
+      "kind": "match",
+      "severity": "medium",
+      "match": {
+        "source": "gateway",
+        "event_type": "policy_decision",
+        "outcome": "deny",
+        "resource": "finance-api"
+      },
+      "attack_techniques": ["T1078"],
+      "risk_ids": ["R-001", "R-005"]
+    },
+    {
+      "id": "DET-002",
+      "title": "Finance Access Attempt from Untrusted Device",
+      "description": "Finance access denied because the device is not trusted.",
+      "kind": "match",
+      "severity": "high",
+      "match": {
+        "source": "gateway",
+        "event_type": "policy_decision",
+        "outcome": "deny",
+        "resource": "finance-api",
+        "details.device_trusted": false
+      },
+      "attack_techniques": ["T1078"],
+      "risk_ids": ["R-001", "R-005"]
+    },
+    {
+      "id": "DET-003",
+      "title": "Repeated Authorisation Denials",
+      "description": "Three denied policy decisions for the same subject within sixty seconds.",
+      "kind": "threshold",
+      "severity": "high",
+      "match": {
+        "source": "gateway",
+        "event_type": "policy_decision",
+        "outcome": "deny"
+      },
+      "group_by": "subject",
+      "threshold": 3,
+      "window_seconds": 60,
+      "attack_techniques": ["T1078"],
+      "risk_ids": ["R-001", "R-003"]
+    },
+    {
+      "id": "DET-004",
+      "title": "Finance Application Policy Bypass",
+      "description": "Successful Finance application access without a correlated gateway ALLOW.",
+      "kind": "missing_prior",
+      "severity": "critical",
+      "match": {
+        "source": "finance-api",
+        "event_type": "application_access",
+        "outcome": "allow",
+        "resource": "finance-api"
+      },
+      "prior_match": {
+        "source": "gateway",
+        "event_type": "policy_decision",
+        "outcome": "allow",
+        "resource": "finance-api"
+      },
+      "correlation_field": "correlation_id",
+      "within_seconds": 30,
+      "attack_techniques": [],
+      "risk_ids": ["R-004", "R-011"]
+    },
+    {
+      "id": "DET-005",
+      "title": "Secret Access Without Policy Authorisation",
+      "description": "Finance secret retrieval without a correlated gateway ALLOW.",
+      "kind": "missing_prior",
+      "severity": "critical",
+      "match": {
+        "source": "finance-api",
+        "event_type": "vault_secret_access",
+        "outcome": "allow",
+        "resource": "finance-api"
+      },
+      "prior_match": {
+        "source": "gateway",
+        "event_type": "policy_decision",
+        "outcome": "allow",
+        "resource": "finance-api"
+      },
+      "correlation_field": "correlation_id",
+      "within_seconds": 30,
+      "attack_techniques": [],
+      "risk_ids": ["R-007", "R-011"]
+    },
+    {
+      "id": "DET-006",
+      "title": "Direct Backend Access Attempt",
+      "description": "Attempt to access a protected workload without the expected gateway credential.",
+      "kind": "match",
+      "severity": "high",
+      "match": {
+        "source": ["employee-api", "finance-api"],
+        "event_type": "direct_backend_access_denied",
+        "outcome": "deny"
+      },
+      "attack_techniques": [],
+      "risk_ids": ["R-003", "R-011"]
+    }
+  ]
+}

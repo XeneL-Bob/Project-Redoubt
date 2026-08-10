@@ -27,6 +27,7 @@ class SecurityEvent(BaseModel):
     outcome: str
     subject: str | None = None
     resource: str | None = None
+    correlation_id: str | None = None
     details: dict[str, Any] = Field(default_factory=dict)
 
 
