@@ -14,7 +14,7 @@ Project Redoubt does not claim implementation coverage for systems that do not y
 | AP-002 | Compromised Administrator | Deferred |
 | AP-003 | Public Application to Database | Substantially validated |
 | AP-004 | Developer to Software Supply Chain | Deferred |
-| AP-005 | Ransomware to Recovery Infrastructure | Deferred |
+| AP-005 | Ransomware to Recovery Infrastructure | Partially validated |
 | AP-006 | Insider Research Exfiltration | Deferred |
 | AP-007 | Contractor to Internal Resource | Partially validated |
 | AP-008 | Security Platform Compromise | Deferred |
@@ -91,12 +91,24 @@ Requires:
 
 ### AP-005 — Ransomware to Recovery Infrastructure
 
-Requires:
+Phase 8 now partially validates this attack path.
 
-- protected backup infrastructure
-- recovery credentials
-- recovery-network isolation
-- restore workflow
+Validated controls include:
+
+- dedicated recovery network
+- production-to-recovery segmentation
+- controlled Finance backup
+- recovery-store integrity verification
+- simulated production corruption
+- isolated database restoration
+- restored-data verification
+
+Not yet validated:
+
+- immutable or offline backup infrastructure
+- backup-administrator compromise
+- enterprise-wide ransomware propagation
+- identity and infrastructure reconstruction
 
 ### AP-006 — Insider Research Exfiltration
 

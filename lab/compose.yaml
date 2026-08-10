@@ -66,6 +66,24 @@ services:
         condition: service_started
     restart: unless-stopped
 
+
+  incident-response:
+    build:
+      context: ./incident
+    user: "${HOST_UID}:${HOST_GID}"
+    environment:
+      ALERTS_FILE: /data/security-alerts.jsonl
+      INCIDENTS_FILE: /data/incidents.jsonl
+      ACTIONS_FILE: /data/containment-actions.jsonl
+      STATE_FILE: /data/incident-state.json
+    volumes:
+      - ../evidence/runtime:/data
+    network_mode: none
+    depends_on:
+      detection:
+        condition: service_started
+    restart: unless-stopped
+
   vault:
     image: hashicorp/vault:2.0.3
     command:
@@ -116,6 +134,46 @@ services:
       - finance_db_data:/var/lib/postgresql/data
     networks:
       - data_net
+
+
+  backup-agent:
+    image: postgres:17-alpine
+    command:
+      - sh
+      - -c
+      - while true; do sleep 3600; done
+    environment:
+      FINANCE_DB_PASSWORD: ${FINANCE_DB_PASSWORD}
+      BACKUP_FILE: /recovery/finance.sql
+    volumes:
+      - ./recovery/backup.sh:/usr/local/bin/redoubt-backup:ro
+      - recovery_store:/recovery
+    networks:
+      - data_net
+    depends_on:
+      finance-db:
+        condition: service_healthy
+    restart: unless-stopped
+
+  recovery-db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: recovery
+      POSTGRES_USER: recovery_admin
+      POSTGRES_PASSWORD: ${RECOVERY_DB_PASSWORD}
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - pg_isready -U recovery_admin -d recovery
+      interval: 3s
+      timeout: 3s
+      retries: 20
+    volumes:
+      - recovery_db_data:/var/lib/postgresql/data
+      - recovery_store:/recovery:ro
+      - ./recovery/restore.sh:/usr/local/bin/redoubt-restore:ro
+    networks:
+      - recovery_net
 
   employee-api:
     build:
@@ -222,6 +280,12 @@ networks:
     driver: bridge
     internal: true
 
+  recovery_net:
+    driver: bridge
+    internal: true
+
 volumes:
   finance_db_data:
   vault_bootstrap:
+  recovery_store:
+  recovery_db_data:
