@@ -1,0 +1,9 @@
+{
+  "schema": "project-redoubt.release-policy/v1",
+  "required_builder": "project-redoubt/trusted-builder",
+  "required_digest_algorithm": "sha256",
+  "require_clean_source": true,
+  "require_source_commit": true,
+  "require_source_ref": true,
+  "require_signed_provenance": true
+}

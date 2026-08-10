@@ -1,0 +1,218 @@
+name: Supply Chain Security
+
+on:
+  pull_request:
+  push:
+    branches:
+      - phase-10/software-supply-chain-security
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: supply-chain-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  workflow-policy:
+    name: Workflow Security Policy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Configure Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.13"
+
+      - name: Validate workflow security
+        run: |
+          python3 lab/supply-chain/policy/check-workflow-security.py
+
+
+  secret-scan:
+    name: Secret Scanning
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      pull-requests: read
+
+    steps:
+      - name: Checkout complete history
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Gitleaks
+        uses: gitleaks/gitleaks-action@e0c47f4f8be36e29cdc102c57e68cb5cbf0e8d1e # v3.0.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITLEAKS_ENABLE_COMMENTS: "false"
+
+
+  dependency-review:
+    name: Dependency Review
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Review dependency changes
+        uses: actions/dependency-review-action@a1d282b36b6f3519aa1f3fc636f609c47dddb294 # v5.0.0
+        with:
+          fail-on-severity: high
+
+
+  codeql:
+    name: CodeQL SAST
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      security-events: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Initialise CodeQL
+        uses: github/codeql-action/init@5595ccaf912efad79be6eef63a5619ff05969be3 # v4
+        with:
+          languages: python
+
+      - name: Analyse
+        uses: github/codeql-action/analyze@5595ccaf912efad79be6eef63a5619ff05969be3 # v4
+
+
+  supply-chain-validation:
+    name: Supply Chain Attack Validation
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Configure Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.13"
+
+      - name: Build trusted supply-chain components
+        run: |
+          docker build \
+            -t project-redoubt-supply-builder \
+            lab/supply-chain/builder
+
+          docker build \
+            -t project-redoubt-supply-signer \
+            lab/supply-chain/signer
+
+          docker build \
+            -t project-redoubt-supply-verifier \
+            lab/supply-chain/verifier
+
+          docker build \
+            -t project-redoubt-release-approver \
+            lab/supply-chain/approver
+
+          docker build \
+            -t project-redoubt-deployer \
+            lab/supply-chain/deployer
+
+      - name: Run adversarial supply-chain tests
+        env:
+          REDOUBT_SOURCE_COMMIT: ${{ github.sha }}
+          REDOUBT_SOURCE_REF: ${{ github.ref }}
+        run: |
+          ./lab/tests/supply-chain-security-test.sh
+          python3 lab/tests/deployment-detection-test.py
+          ./lab/tests/deployment-gate-test.sh
+
+
+  release-evidence:
+    name: Trusted Build and Attestation
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      id-token: write
+      attestations: write
+      artifact-metadata: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Build trusted builder
+        run: |
+          docker build \
+            -t project-redoubt-supply-builder \
+            lab/supply-chain/builder
+
+      - name: Build release artifact
+        run: |
+          mkdir -p ci-release
+
+          docker run --rm \
+            --network none \
+            --user "$(id -u):$(id -g)" \
+            -e SOURCE_COMMIT="${GITHUB_SHA}" \
+            -e SOURCE_REF="${GITHUB_REF}" \
+            -e SOURCE_DIRTY=false \
+            -e BUILDER_ID="project-redoubt/trusted-builder" \
+            -v "${PWD}/lab/supply-chain/source:/source:ro" \
+            -v "${PWD}/ci-release:/out" \
+            project-redoubt-supply-builder
+
+          sha256sum \
+            ci-release/restech-release-component.tar \
+            > ci-release/restech-release-component.tar.sha256
+
+      - name: Generate SPDX SBOM
+        uses: anchore/sbom-action@e22c389904149dbc22b58101806040fa8d37a610 # v0.24.0
+        with:
+          path: lab/supply-chain/source
+          format: spdx-json
+          output-file: ci-release/sbom.spdx.json
+          upload-artifact: false
+          dependency-snapshot: false
+
+      - name: Attest build provenance
+        uses: actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6 # v4.2.2
+        with:
+          subject-path: ci-release/restech-release-component.tar
+
+      - name: Attest SBOM
+        uses: actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6 # v4.2.2
+        with:
+          subject-path: ci-release/restech-release-component.tar
+          sbom-path: ci-release/sbom.spdx.json
+
+      - name: Upload release evidence
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: project-redoubt-release-evidence
+          path: |
+            ci-release/restech-release-component.tar
+            ci-release/restech-release-component.tar.sha256
+            ci-release/provenance.json
+            ci-release/sbom.spdx.json
+          if-no-files-found: error
+          retention-days: 30

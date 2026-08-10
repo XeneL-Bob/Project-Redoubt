@@ -1,0 +1,9 @@
+{
+  "schema": "project-redoubt.deployment-policy/v1",
+  "required_builder": "project-redoubt/trusted-builder",
+  "require_correlated_trusted_build": true,
+  "allowed_environments": [
+    "staging"
+  ],
+  "approval_ttl_seconds": 120
+}

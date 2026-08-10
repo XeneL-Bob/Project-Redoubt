@@ -74,3 +74,6 @@ private/
 # Project Redoubt runtime lab evidence
 evidence/runtime/
 lab/.env
+
+# Project Redoubt software supply-chain runtime
+lab/supply-chain/runtime/
