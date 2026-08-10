@@ -4,7 +4,7 @@
 
 This document defines the high-level business and security requirements driving the ResTech enterprise security architecture.
 
-Every major security control implemented within Aegis-Fabric should ultimately be traceable to a business, security or risk requirement.
+Every major security control implemented within Project Redoubt should ultimately be traceable to a business, security or risk requirement.
 
 ---
 

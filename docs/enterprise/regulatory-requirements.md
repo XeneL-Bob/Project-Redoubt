@@ -4,7 +4,7 @@
 
 This document defines the regulatory, governance and cybersecurity frameworks considered during the design of the fictional ResTech security architecture.
 
-Aegis-Fabric is an educational security architecture laboratory.
+Project Redoubt is an educational security architecture laboratory.
 
 The project does not claim that ResTech is formally certified against any framework or regulatory standard.
 

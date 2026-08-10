@@ -27,7 +27,7 @@ This document defines representative user populations, identities, roles and acc
 
 ## 3. Example User Accounts
 
-All identities are fictional and exist only within the Aegis-Fabric laboratory.
+All identities are fictional and exist only within the Project Redoubt laboratory.
 
 | Username | Department | Purpose |
 |---|---|---|

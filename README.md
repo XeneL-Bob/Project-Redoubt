@@ -1,9 +1,9 @@
 cat > README.md <<'EOF'
-# Aegis-Fabric
+# Project Redoubt
 
 ## Zero-Trust Enterprise Security Architecture & Attack-Resilience Lab
 
-Aegis-Fabric is a security architecture laboratory built around a fictional enterprise named **ResTech**.
+Project Redoubt is a security architecture laboratory built around a fictional enterprise named **ResTech**.
 
 The purpose of the project is to design, implement, test and document a modern enterprise security architecture using Zero Trust principles.
 
@@ -45,7 +45,7 @@ All people, organisations, systems, addresses and information represented by Res
 
 ## Project Objective
 
-The primary objective of Aegis-Fabric is to answer:
+The primary objective of Project Redoubt is to answer:
 
 > How can an enterprise security architecture minimise the impact of compromised identities, endpoints, applications and workloads while maintaining legitimate business access?
 
@@ -90,7 +90,7 @@ Future phases will introduce:
 ## Repository Structure
 
 ```text
-Aegis-Fabric/
+Project Redoubt/
 ├── README.md
 ├── docs/
 │   └── enterprise/
