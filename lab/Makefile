@@ -1,6 +1,6 @@
 COMPOSE=docker compose --env-file .env -f compose.yaml
 
-.PHONY: validate build up ps logs policy-test segmentation-test detection-test test down reset adversary-test incident-recovery-test privileged-access-test privileged-detection-test
+.PHONY: validate build up ps logs policy-test segmentation-test detection-test adversary-test incident-recovery-test privileged-access-test privileged-detection-test supply-chain-test deployment-test test down reset
 
 validate:
 	$(COMPOSE) config -q
@@ -39,6 +39,20 @@ privileged-detection-test:
 	python3 tests/privileged-detection-test.py
 	./tests/privileged-detection-live.sh
 
+deployment-test:
+	python3 tests/deployment-detection-test.py
+	./tests/deployment-gate-test.sh
+	./tests/deployment-detection-live.sh
+
+supply-chain-test:
+	./tests/supply-chain-security-test.sh
+	python3 tests/supply-chain-detection-test.py
+	./tests/supply-chain-detection-live.sh
+	python3 tests/deployment-detection-test.py
+	./tests/deployment-gate-test.sh
+	./tests/deployment-detection-live.sh
+	python3 adversary/supply-chain-runner.py
+
 test:
 	./tests/smoke.sh
 	./tests/segmentation-test.sh
@@ -48,6 +62,13 @@ test:
 	./tests/privileged-access-test.sh
 	python3 tests/privileged-detection-test.py
 	./tests/privileged-detection-live.sh
+	./tests/supply-chain-security-test.sh
+	python3 tests/supply-chain-detection-test.py
+	./tests/supply-chain-detection-live.sh
+	python3 tests/deployment-detection-test.py
+	./tests/deployment-gate-test.sh
+	./tests/deployment-detection-live.sh
+	python3 adversary/supply-chain-runner.py
 
 down:
 	$(COMPOSE) down

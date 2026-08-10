@@ -26,6 +26,13 @@ A scenario may produce more than one successful outcome.
 | ADV-007 | AP-003 | R-003, R-011 | Workload gateway credential | DET-006 | Prevented + Detected + Contained |
 | ADV-008 | AP-003 | R-004, R-011 | Policy-path monitoring | DET-004 | Detected |
 | ADV-009 | AP-003 | R-007, R-011 | Secret-access correlation | DET-005 | Detected |
+| ADV-010 | AP-004 | R-006 | Clean-source build policy | DET-016 | Prevented + Detected + Contained |
+| ADV-011 | AP-004 | R-006 | Artifact digest verification | DET-013 | Prevented + Detected + Contained |
+| ADV-012 | AP-004 | R-006 | Signed provenance | DET-014 | Prevented + Detected + Contained |
+| ADV-013 | AP-004 | R-006 | Trusted-builder policy | DET-015 | Prevented + Detected + Contained |
+| ADV-014 | AP-004 | R-006 | Mandatory signed provenance | DET-017 | Prevented + Detected + Contained |
+| ADV-015 | AP-004 | R-006 | Trusted-build correlation + independent deployment approval gate | DET-018, DET-019, DET-020 | Prevented + Detected + Contained |
+| ADV-016 | AP-004 | R-006 | Builder/signer key separation | — | Prevented + Contained |
 
 ## Security Interpretation
 

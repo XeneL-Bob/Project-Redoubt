@@ -52,6 +52,7 @@ services:
       - finance_net
       - management_net
       - management_edge_net
+      - supply_chain_telemetry_net
 
   detection:
     build:
@@ -89,6 +90,25 @@ services:
     restart: unless-stopped
 
 
+
+
+  supply-chain-telemetry-relay:
+    build:
+      context: ./supply-chain/telemetry
+    user: "${HOST_UID}:${HOST_GID}"
+    environment:
+      TELEMETRY_URL: http://telemetry:9000
+      TELEMETRY_INGEST_TOKEN: ${TELEMETRY_INGEST_TOKEN}
+      SPOOL_FILE: /spool/security-events.jsonl
+      STATE_FILE: /spool/relay-state.json
+    volumes:
+      - ./supply-chain/runtime/telemetry:/spool
+    networks:
+      - supply_chain_telemetry_net
+    depends_on:
+      telemetry:
+        condition: service_started
+    restart: unless-stopped
 
   privilege-broker:
     build:
@@ -387,6 +407,10 @@ networks:
     internal: true
 
   recovery_net:
+    driver: bridge
+    internal: true
+
+  supply_chain_telemetry_net:
     driver: bridge
     internal: true
 

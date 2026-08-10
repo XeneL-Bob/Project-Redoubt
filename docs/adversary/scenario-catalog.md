@@ -214,3 +214,243 @@ Expected result:
     Critical DET-005 alert
 
 This scenario validates detection logic without extracting or exposing an actual secret.
+
+
+## ADV-010 — Compromised Developer Attempts Dirty-Source Build
+
+Attack path:
+
+    AP-004 — Developer to Software Supply Chain
+
+Risk:
+
+    R-006 — CI/CD Supply-Chain Compromise
+
+Action:
+
+A compromised developer attempts to enter locally modified or uncommitted source into the trusted build process.
+
+Controls exercised:
+
+- trusted builder
+- clean-source policy
+- supply-chain telemetry
+- DET-016
+
+Expected result:
+
+    BUILD DENIED
+    DET-016
+
+Security outcome:
+
+    PREVENTED
+    DETECTED
+    CONTAINED
+
+
+## ADV-011 — Post-Build Artifact Tampering
+
+Attack path:
+
+    AP-004 — Developer to Software Supply Chain
+
+Action:
+
+Modify the release artifact after the trusted build has completed.
+
+Controls exercised:
+
+- SHA-256 artifact digest
+- signed provenance
+- independent release verifier
+- DET-013
+
+Expected result:
+
+    RELEASE DENIED
+    DET-013
+
+Security outcome:
+
+    PREVENTED
+    DETECTED
+    CONTAINED
+
+
+## ADV-012 — Forged Release Provenance
+
+Attack path:
+
+    AP-004 — Developer to Software Supply Chain
+
+Action:
+
+Modify signed provenance after release signing in an attempt to claim a different builder identity.
+
+Controls exercised:
+
+- Ed25519 provenance signature
+- trusted release public key
+- independent verifier
+- DET-014
+
+Expected result:
+
+    RELEASE DENIED
+    DET-014
+
+Security outcome:
+
+    PREVENTED
+    DETECTED
+    CONTAINED
+
+
+## ADV-013 — Signed Artifact from Untrusted Builder
+
+Attack path:
+
+    AP-004 — Developer to Software Supply Chain
+
+Action:
+
+Produce an artifact using an untrusted builder identity and then sign its provenance with the valid laboratory signing authority.
+
+Control objective:
+
+A valid signature must not override release policy.
+
+Controls exercised:
+
+- required-builder policy
+- signed provenance
+- release verifier
+- DET-015
+
+Expected result:
+
+    RELEASE DENIED
+    DET-015
+
+Security outcome:
+
+    PREVENTED
+    DETECTED
+    CONTAINED
+
+
+## ADV-014 — Unsigned Release Attempt
+
+Attack path:
+
+    AP-004 — Developer to Software Supply Chain
+
+Action:
+
+Attempt release verification without the required provenance signature.
+
+Controls exercised:
+
+- mandatory signed provenance
+- release verifier
+- DET-017
+
+Expected result:
+
+    RELEASE DENIED
+    DET-017
+
+Security outcome:
+
+    PREVENTED
+    DETECTED
+    CONTAINED
+
+
+## ADV-015 — Trusted-Build Path Bypass Against Deployment Boundary
+
+Attack path:
+
+    AP-004 — Developer to Software Supply Chain
+
+Risk:
+
+    R-006 — CI/CD Supply-Chain Compromise
+
+Action:
+
+Submit an otherwise valid signed release to the release verifier using a correlation identifier that does not match the trusted build recorded in signed provenance.
+
+Control chain exercised:
+
+    Release Verifier
+        |
+        +--> DET-018
+        |
+        v
+    Independent Release Approver
+        |
+       DENY
+        |
+        +--> DET-019
+        |
+        v
+    Deployment Gate
+        |
+       DENY
+        |
+        +--> DET-020
+
+Controls exercised:
+
+- trusted-build correlation
+- signed provenance
+- independent release verification
+- independent deployment approval
+- separate deployment approval signing key
+- mandatory signed deployment approval
+- deployment admission enforcement
+- DET-018
+- DET-019
+- DET-020
+
+Expected result:
+
+    release anomaly detected
+    deployment approval denied
+    no deployment approval issued
+    deployment denied
+
+Security outcome:
+
+    PREVENTED
+    DETECTED
+    CONTAINED
+
+
+## ADV-016 — Signing-Key Isolation
+
+Attack path:
+
+    AP-004 — Developer to Software Supply Chain
+
+Action:
+
+A compromised trusted-build context attempts to locate the release-signing private key.
+
+Controls exercised:
+
+- builder/signer separation
+- isolated container execution
+- no signing-key mount in builder
+- least privilege
+
+Expected result:
+
+    KEY_ISOLATED
+
+Security outcome:
+
+    PREVENTED
+    CONTAINED

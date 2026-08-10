@@ -119,12 +119,22 @@ jobs:
             -t project-redoubt-supply-verifier \
             lab/supply-chain/verifier
 
+          docker build \
+            -t project-redoubt-release-approver \
+            lab/supply-chain/approver
+
+          docker build \
+            -t project-redoubt-deployer \
+            lab/supply-chain/deployer
+
       - name: Run adversarial supply-chain tests
         env:
           REDOUBT_SOURCE_COMMIT: ${{ github.sha }}
           REDOUBT_SOURCE_REF: ${{ github.ref }}
         run: |
           ./lab/tests/supply-chain-security-test.sh
+          python3 lab/tests/deployment-detection-test.py
+          ./lab/tests/deployment-gate-test.sh
 
 
   release-evidence:

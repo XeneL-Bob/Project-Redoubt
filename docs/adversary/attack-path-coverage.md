@@ -8,12 +8,12 @@ Project Redoubt does not claim implementation coverage for systems that do not y
 
 ## Current Coverage
 
-| Attack Path | Description | Phase 7 Status |
+| Attack Path | Description | Current Status |
 |---|---|---|
 | AP-001 | Phished Employee to Crown Jewel | Partially validated |
 | AP-002 | Compromised Administrator | Partially validated |
 | AP-003 | Public Application to Database | Substantially validated |
-| AP-004 | Developer to Software Supply Chain | Deferred |
+| AP-004 | Developer to Software Supply Chain | Substantially validated |
 | AP-005 | Ransomware to Recovery Infrastructure | Partially validated |
 | AP-006 | Insider Research Exfiltration | Deferred |
 | AP-007 | Contractor to Internal Resource | Partially validated |
@@ -70,7 +70,7 @@ Not yet validated:
 - project-specific resource provisioning
 
 
-## Deferred Attack Paths
+## Additional Attack-Path Coverage
 
 ### AP-002 — Compromised Administrator
 
@@ -116,12 +116,103 @@ Not yet validated:
 
 ### AP-004 — Developer to Software Supply Chain
 
-Requires:
+Phase 10 substantially validates this attack path.
 
-- source repository controls
-- CI/CD pipeline
-- artifact validation
-- deployment approval controls
+Implemented preventive controls include:
+
+- isolated trusted build execution
+- deterministic release artifact construction
+- read-only source mounting
+- clean-source enforcement
+- trusted builder identity enforcement
+- SHA-256 artifact integrity verification
+- Ed25519 signed release provenance
+- builder and signer trust-domain separation
+- release signing-key isolation
+- independent release verification
+- independent deployment approval authority
+- separate deployment-approval Ed25519 key
+- short-lived environment-bound deployment approval
+- deployment approval signature validation
+- post-approval artifact digest validation
+- network-isolated deployment gate
+- denial of deployment without valid approval
+
+Implemented CI/CD controls include:
+
+- GitHub Actions security workflow
+- immutable action commit pinning
+- explicit least-privilege workflow permissions
+- disabled checkout credential persistence
+- Gitleaks secret scanning
+- CodeQL static analysis
+- pull-request dependency review
+- SPDX SBOM generation
+- GitHub build provenance attestation
+- GitHub SBOM attestation
+- controlled release-evidence artifact generation
+
+Implemented detective controls include:
+
+- DET-013 — Supply Chain Artifact Integrity Failure
+- DET-014 — Supply Chain Provenance Signature Failure
+- DET-015 — Untrusted Builder Release Attempt
+- DET-016 — Dirty Source Build Attempt
+- DET-017 — Unsigned Release Attempt
+- DET-018 — Release Without Correlated Trusted Build
+- DET-019 — Deployment Approval Denied
+- DET-020 — Deployment Gate Denied
+
+Validated adversary scenarios include:
+
+- ADV-010 — dirty-source build attempt
+- ADV-011 — post-build artifact tampering
+- ADV-012 — forged release provenance
+- ADV-013 — signed artifact from an untrusted builder
+- ADV-014 — unsigned release attempt
+- ADV-015 — trusted-build path bypass against deployment boundary
+- ADV-016 — build context attempts signing-key access
+
+ADV-015 validates the complete abnormal path:
+
+    Release Verifier ALLOW
+            |
+            +--> DET-018
+            |
+            v
+    Independent Release Approver
+            |
+          DENY
+            |
+            +--> DET-019
+            |
+            v
+    No Signed Deployment Approval
+            |
+            v
+      Deployment Gate
+            |
+          DENY
+            |
+            +--> DET-020
+
+The scenario therefore produces:
+
+    PREVENTED
+    DETECTED
+    CONTAINED
+
+AP-004 is classified as substantially validated rather than fully validated.
+
+Remaining limitations include:
+
+- GitHub repository branch/ruleset enforcement is not yet validated as an active repository control
+- mandatory human pull-request approval is not validated
+- GitHub-hosted runner compromise is outside the laboratory scope
+- production registry admission control is not implemented
+- production deployment infrastructure is simulated
+- enterprise release-management integration is not implemented
+- third-party dependency compromise is not exercised through a realistic production application dependency chain
 
 ### AP-005 — Ransomware to Recovery Infrastructure
 

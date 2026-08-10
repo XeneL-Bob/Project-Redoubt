@@ -257,6 +257,162 @@
         "R-002",
         "R-008"
       ]
+    },
+    {
+      "id": "DET-013",
+      "title": "Supply Chain Artifact Integrity Failure",
+      "description": "A release artifact failed cryptographic digest verification before release.",
+      "kind": "match",
+      "severity": "critical",
+      "match": {
+        "source": "release-verifier",
+        "event_type": "release_verification",
+        "outcome": "deny",
+        "details.reason": "artifact_digest_mismatch"
+      },
+      "attack_techniques": [
+        "T1195.002"
+      ],
+      "risk_ids": [
+        "R-006"
+      ]
+    },
+    {
+      "id": "DET-014",
+      "title": "Supply Chain Provenance Signature Failure",
+      "description": "Release provenance failed signature verification.",
+      "kind": "match",
+      "severity": "critical",
+      "match": {
+        "source": "release-verifier",
+        "event_type": "release_verification",
+        "outcome": "deny",
+        "details.reason": "provenance_signature_invalid"
+      },
+      "attack_techniques": [
+        "T1195.002"
+      ],
+      "risk_ids": [
+        "R-006"
+      ]
+    },
+    {
+      "id": "DET-015",
+      "title": "Untrusted Builder Release Attempt",
+      "description": "A release artifact was produced by a builder not trusted by release policy.",
+      "kind": "match",
+      "severity": "critical",
+      "match": {
+        "source": "release-verifier",
+        "event_type": "release_verification",
+        "outcome": "deny",
+        "details.reason": "untrusted_builder_identity"
+      },
+      "attack_techniques": [
+        "T1195.002"
+      ],
+      "risk_ids": [
+        "R-006"
+      ]
+    },
+    {
+      "id": "DET-016",
+      "title": "Dirty Source Build Attempt",
+      "description": "The trusted builder rejected a build because the source repository was dirty.",
+      "kind": "match",
+      "severity": "high",
+      "match": {
+        "source": "trusted-builder",
+        "event_type": "build_decision",
+        "outcome": "deny",
+        "details.reason": "dirty_source"
+      },
+      "attack_techniques": [
+        "T1195.002"
+      ],
+      "risk_ids": [
+        "R-006"
+      ]
+    },
+    {
+      "id": "DET-017",
+      "title": "Unsigned Release Attempt",
+      "description": "A release verification was attempted without the required signed provenance.",
+      "kind": "match",
+      "severity": "high",
+      "match": {
+        "source": "release-verifier",
+        "event_type": "release_verification",
+        "outcome": "deny",
+        "details.reason": "provenance_signature_missing"
+      },
+      "attack_techniques": [
+        "T1195.002"
+      ],
+      "risk_ids": [
+        "R-006"
+      ]
+    },
+    {
+      "id": "DET-018",
+      "title": "Release Without Correlated Trusted Build",
+      "description": "A release was accepted without a correlated trusted-builder ALLOW event.",
+      "kind": "missing_prior",
+      "severity": "critical",
+      "match": {
+        "source": "release-verifier",
+        "event_type": "release_verification",
+        "outcome": "allow"
+      },
+      "prior_match": {
+        "source": "trusted-builder",
+        "event_type": "build_decision",
+        "outcome": "allow"
+      },
+      "correlation_field": "correlation_id",
+      "within_seconds": 120,
+      "attack_techniques": [
+        "T1195.002"
+      ],
+      "risk_ids": [
+        "R-006"
+      ]
+    },
+    {
+      "id": "DET-019",
+      "title": "Deployment Approval Denied",
+      "description": "The independent release approver rejected a software deployment approval request.",
+      "kind": "match",
+      "severity": "critical",
+      "match": {
+        "source": "release-approver",
+        "event_type": "deployment_approval",
+        "outcome": "deny"
+      },
+      "attack_techniques": [
+        "T1195.002"
+      ],
+      "risk_ids": [
+        "R-006"
+      ]
+    },
+    {
+      "id": "DET-020",
+      "title": "Deployment Gate Denied",
+      "description": "The deployment gate rejected an attempted software deployment.",
+      "kind": "match",
+      "severity": "critical",
+      "match": {
+        "source": "deployment-gate",
+        "event_type": "deployment_decision",
+        "outcome": "deny"
+      },
+      "attack_techniques": [
+        "T1195.002"
+      ],
+      "risk_ids": [
+        "R-006"
+      ]
     }
   ]
 }
