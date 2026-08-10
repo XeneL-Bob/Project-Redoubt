@@ -1,4 +1,3 @@
-cat > README.md <<'EOF'
 # Project Redoubt
 
 ## Zero-Trust Enterprise Security Architecture & Attack-Resilience Lab
@@ -61,7 +60,7 @@ The architecture follows three core assumptions:
 
 ### Phase 1 — Enterprise Definition
 
-Current status: **In Progress**
+Current status: **Complete**
 
 Phase 1 defines:
 
@@ -105,3 +104,28 @@ Project Redoubt/
 ├── incident-response/
 ├── tests/
 └── evidence/
+
+```
+
+---
+
+## Current Project Phases
+
+- **Phase 1 — Enterprise Definition:** Complete
+- **Phase 2 — Security Prioritisation & Risk Analysis:** Next
+- Phase 3 — Threat Modelling
+- Phase 4 — Security Architecture
+- Phase 5 — Zero Trust Implementation
+- Phase 6 — Security Telemetry & Detection
+- Phase 7 — Adversary Simulation
+- Phase 8 — Resilience Validation
+
+---
+
+## Disclaimer
+
+Project Redoubt is an educational and portfolio security architecture project.
+
+ResTech is entirely fictional. All users, systems, addresses, infrastructure and organisational information represented in this repository are fictional.
+
+Security testing performed as part of Project Redoubt must only target systems specifically created and authorised for the laboratory.
