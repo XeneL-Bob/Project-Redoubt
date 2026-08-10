@@ -25,14 +25,19 @@ segmentation-test:
 
 detection-test:
 	./tests/detection-test.sh
+	python3 adversary/runner.py
 
 test:
 	./tests/smoke.sh
 	./tests/segmentation-test.sh
 	./tests/detection-test.sh
+	python3 adversary/runner.py
 
 down:
 	$(COMPOSE) down
 
 reset:
 	$(COMPOSE) down -v --remove-orphans
+
+adversary-test:
+	python3 adversary/runner.py
