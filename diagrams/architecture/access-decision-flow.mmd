@@ -1,0 +1,32 @@
+flowchart TD
+
+    A[Subject Requests Resource]
+    B[Authenticate Identity]
+    C[Collect Context]
+    D[Policy Enforcement Point]
+    E[Policy Engine]
+    F{Decision}
+    G[Policy Administrator]
+    H[Allow Session]
+    I[Deny Request]
+    J[Require Step-Up Authentication]
+    K[Security Telemetry]
+
+    A --> B
+    B --> C
+    C --> D
+    D --> E
+    E --> F
+
+    F -->|ALLOW| G
+    G --> H
+
+    F -->|DENY| I
+    F -->|STEP-UP| J
+    J --> B
+
+    B --> K
+    D --> K
+    E --> K
+    H --> K
+    I --> K

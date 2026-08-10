@@ -1,0 +1,30 @@
+flowchart TD
+
+    ID[Identity]
+    END[Endpoints]
+    NET[Network]
+    APP[Applications]
+    POL[Policy Plane]
+    WORK[Workloads]
+    INFRA[Infrastructure]
+    BACKUP[Backup]
+
+    COLLECT[Central Collection]
+    STORE[(Security Event Store)]
+    DETECT[Detection Engine]
+    ALERT[Security Alert]
+    SOC[Security Analyst]
+
+    ID --> COLLECT
+    END --> COLLECT
+    NET --> COLLECT
+    APP --> COLLECT
+    POL --> COLLECT
+    WORK --> COLLECT
+    INFRA --> COLLECT
+    BACKUP --> COLLECT
+
+    COLLECT --> STORE
+    STORE --> DETECT
+    DETECT --> ALERT
+    ALERT --> SOC

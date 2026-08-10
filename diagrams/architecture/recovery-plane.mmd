@@ -1,0 +1,17 @@
+flowchart TD
+
+    PROD[Production]
+    BACKUP[Backup Service]
+    STORE[Protected Backup Store]
+    IMMUTABLE[Immutable / Isolated Copy]
+    RECOVERY[Recovery Environment]
+    VALIDATE[Integrity Validation]
+    RESTORE[Trusted Restore]
+
+    PROD --> BACKUP
+    BACKUP --> STORE
+    STORE --> IMMUTABLE
+
+    IMMUTABLE --> RECOVERY
+    RECOVERY --> VALIDATE
+    VALIDATE --> RESTORE
