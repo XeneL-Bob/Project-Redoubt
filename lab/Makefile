@@ -1,6 +1,6 @@
 COMPOSE=docker compose --env-file .env -f compose.yaml
 
-.PHONY: validate build up ps logs policy-test segmentation-test detection-test test down reset adversary-test incident-recovery-test
+.PHONY: validate build up ps logs policy-test segmentation-test detection-test test down reset adversary-test incident-recovery-test privileged-access-test privileged-detection-test
 
 validate:
 	$(COMPOSE) config -q
@@ -32,12 +32,22 @@ adversary-test:
 incident-recovery-test:
 	./tests/incident-recovery-test.sh
 
+privileged-access-test:
+	./tests/privileged-access-test.sh
+
+privileged-detection-test:
+	python3 tests/privileged-detection-test.py
+	./tests/privileged-detection-live.sh
+
 test:
 	./tests/smoke.sh
 	./tests/segmentation-test.sh
 	./tests/detection-test.sh
 	python3 adversary/runner.py
 	./tests/incident-recovery-test.sh
+	./tests/privileged-access-test.sh
+	python3 tests/privileged-detection-test.py
+	./tests/privileged-detection-live.sh
 
 down:
 	$(COMPOSE) down
