@@ -1,0 +1,38 @@
+flowchart TB
+
+    U[Users / Devices]
+    IDP[Identity Provider + MFA]
+    PEP[Policy Enforcement Point]
+    PE[Policy Engine]
+    PA[Policy Administrator]
+
+    APP[Applications]
+    WORK[Workloads]
+    DB[(Databases)]
+    SEC[Telemetry / SIEM]
+    MGMT[Management Plane]
+    BAK[Backup / Recovery]
+
+    U --> IDP
+    IDP --> PEP
+    PEP --> PE
+    PE --> PA
+    PA --> PEP
+
+    PEP --> APP
+    PEP --> WORK
+    WORK --> DB
+
+    IDP --> SEC
+    PEP --> SEC
+    APP --> SEC
+    WORK --> SEC
+    DB --> SEC
+    MGMT --> SEC
+    BAK --> SEC
+
+    MGMT --> IDP
+    MGMT --> APP
+    MGMT --> WORK
+
+    DB --> BAK

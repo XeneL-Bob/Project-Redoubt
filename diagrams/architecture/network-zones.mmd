@@ -1,0 +1,38 @@
+flowchart LR
+
+    INTERNET((Internet))
+    DMZ[ZONE-01 Edge / DMZ]
+    USERS[ZONE-02 Corporate Users]
+    APP[ZONE-03 Applications]
+    DB[ZONE-04 Databases]
+    DEV[ZONE-05 Development]
+    MGMT[ZONE-06 Management]
+    SEC[ZONE-07 Security]
+    BACKUP[ZONE-08 Backup / Recovery]
+    ATTACK[ZONE-09 Attack Lab]
+    GUEST[ZONE-10 Guest]
+
+    INTERNET --> DMZ
+    DMZ --> APP
+    APP --> DB
+
+    USERS --> APP
+    USERS --> SEC
+
+    DEV --> APP
+
+    MGMT --> APP
+    MGMT --> DB
+    MGMT --> SEC
+
+    APP --> SEC
+    DB --> SEC
+    DEV --> SEC
+    MGMT --> SEC
+
+    DB --> BACKUP
+
+    ATTACK -. controlled testing .-> DMZ
+    ATTACK -. controlled testing .-> APP
+
+    GUEST -. no internal access .-> INTERNET
