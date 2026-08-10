@@ -1,0 +1,127 @@
+{
+  "realm": "restech",
+  "displayName": "ResTech",
+  "enabled": true,
+  "sslRequired": "none",
+  "registrationAllowed": false,
+  "resetPasswordAllowed": false,
+  "rememberMe": false,
+  "roles": {
+    "realm": [
+      {
+        "name": "employee"
+      },
+      {
+        "name": "developer"
+      },
+      {
+        "name": "finance-reader"
+      },
+      {
+        "name": "finance-approver"
+      },
+      {
+        "name": "contractor"
+      },
+      {
+        "name": "security-analyst"
+      },
+      {
+        "name": "infrastructure-admin"
+      }
+    ]
+  },
+  "clients": [
+    {
+      "clientId": "redoubt-test-cli",
+      "name": "Project Redoubt Test CLI",
+      "enabled": true,
+      "protocol": "openid-connect",
+      "publicClient": true,
+      "standardFlowEnabled": false,
+      "directAccessGrantsEnabled": true,
+      "serviceAccountsEnabled": false
+    }
+  ],
+  "users": [
+    {
+      "username": "alice.employee",
+      "enabled": true,
+      "emailVerified": true,
+      "firstName": "Alice",
+      "lastName": "Employee",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "${ALICE_PASSWORD}",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "employee"
+      ],
+      "email": "alice.employee@restech.example",
+      "requiredActions": []
+    },
+    {
+      "username": "bob.developer",
+      "enabled": true,
+      "emailVerified": true,
+      "firstName": "Bob",
+      "lastName": "Developer",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "${BOB_PASSWORD}",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "employee",
+        "developer"
+      ],
+      "email": "bob.developer@restech.example",
+      "requiredActions": []
+    },
+    {
+      "username": "carol.finance",
+      "enabled": true,
+      "emailVerified": true,
+      "firstName": "Carol",
+      "lastName": "Finance",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "${CAROL_PASSWORD}",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "employee",
+        "finance-reader",
+        "finance-approver"
+      ],
+      "email": "carol.finance@restech.example",
+      "requiredActions": []
+    },
+    {
+      "username": "erin.contractor",
+      "enabled": true,
+      "emailVerified": true,
+      "firstName": "Erin",
+      "lastName": "Contractor",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "${ERIN_PASSWORD}",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "contractor"
+      ],
+      "email": "erin.contractor@restech.example",
+      "requiredActions": []
+    }
+  ]
+}
