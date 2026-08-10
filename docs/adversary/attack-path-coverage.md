@@ -11,13 +11,13 @@ Project Redoubt does not claim implementation coverage for systems that do not y
 | Attack Path | Description | Phase 7 Status |
 |---|---|---|
 | AP-001 | Phished Employee to Crown Jewel | Partially validated |
-| AP-002 | Compromised Administrator | Deferred |
+| AP-002 | Compromised Administrator | Partially validated |
 | AP-003 | Public Application to Database | Substantially validated |
 | AP-004 | Developer to Software Supply Chain | Deferred |
 | AP-005 | Ransomware to Recovery Infrastructure | Partially validated |
 | AP-006 | Insider Research Exfiltration | Deferred |
 | AP-007 | Contractor to Internal Resource | Partially validated |
-| AP-008 | Security Platform Compromise | Deferred |
+| AP-008 | Security Platform Compromise | Partially validated |
 
 ## AP-001 Coverage
 
@@ -74,11 +74,45 @@ Not yet validated:
 
 ### AP-002 — Compromised Administrator
 
-Requires implementation of:
+Phase 9 partially validates this attack path.
 
-- privileged management plane
-- administrative identities
-- privileged-access workflows
+Validated controls include:
+
+- dedicated privileged identities
+- separate privileged OIDC client
+- isolated management networks
+- JIT privileged elevation
+- short-lived elevation grants
+- role-specific administrative domains
+- trusted administrative device context
+- management Policy Enforcement Point
+- independent Admin OPA decisions
+- management-backend workload credential
+- privileged elevation detection
+- repeated elevation-denial detection
+- direct management-backend bypass detection
+- management policy-bypass detection
+
+Validated negative cases include:
+
+- standard employee requests elevation
+- privileged identity uses normal client
+- privileged identity has no elevation
+- administrator uses untrusted device
+- administrator requests wrong privileged domain
+- elevation grant crosses management domains
+- elevation grant expires
+- direct backend bypass is attempted
+
+Not yet validated:
+
+- phishing-resistant MFA
+- real privileged workstation attestation
+- real credential theft
+- session revocation
+- enterprise PAM integration
+- production infrastructure administration
+- administrator endpoint compromise
 
 ### AP-004 — Developer to Software Supply Chain
 
@@ -120,11 +154,31 @@ Requires:
 
 ### AP-008 — Security Platform Compromise
 
-Requires:
+Phase 9 partially validates this attack path.
 
-- detection administration interface
-- rule-management control plane
-- immutable or protected evidence storage
+Validated controls include:
+
+- separate security-admin identity
+- JIT security-management elevation
+- security-management role separation
+- controlled security-control modification operation
+- telemetry for privileged security operations
+- DET-011 security-control modification detection
+- DET-012 management policy-bypass detection
+- management-backend bypass protection
+
+The laboratory can identify expected security-control changes and detect privileged operations that occur outside the expected policy path.
+
+Not yet validated:
+
+- actual detection-rule replacement
+- malicious deletion of detection rules
+- suppression or deletion of existing alerts
+- compromise of the detection-engine host
+- immutable security telemetry
+- independently administered evidence storage
+- cryptographically protected audit logs
+
 
 ## Architectural Principle
 

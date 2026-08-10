@@ -18,6 +18,12 @@ Risk → Attack Behaviour → Telemetry → Detection Rule → Test → Alert �
 | DET-004 | Finance Application Policy Bypass | Critical | R-004, R-011 |
 | DET-005 | Secret Access Without Policy Authorisation | Critical | R-007, R-011 |
 | DET-006 | Direct Backend Access Attempt | High | R-003, R-011 |
+| DET-007 | Privileged Elevation Denied | High | R-002, R-008 |
+| DET-008 | Repeated Privileged Elevation Denials | Critical | R-002, R-008 |
+| DET-009 | Direct Management Backend Access Attempt | Critical | R-002, R-008 |
+| DET-010 | Privileged Access from Untrusted Device | High | R-002, R-008 |
+| DET-011 | Security Control Modification | Medium | R-008 |
+| DET-012 | Management Policy Bypass | Critical | R-002, R-008 |
 
 ## DET-001 — Restricted Finance Resource Access Denied
 
@@ -79,3 +85,29 @@ Project Redoubt requires detections to be:
 - validated by automated tests
 - linked to documented risks
 - supported by observable alert evidence
+
+## Phase 9 — Privileged Management Detections
+
+### DET-007 — Privileged Elevation Denied
+
+Detects rejected JIT privileged-elevation requests.
+
+### DET-008 — Repeated Privileged Elevation Denials
+
+Detects three denied elevation attempts for the same subject within sixty seconds.
+
+### DET-009 — Direct Management Backend Access Attempt
+
+Detects attempted management Policy Enforcement Point bypass.
+
+### DET-010 — Privileged Access from Untrusted Device
+
+Detects management requests denied because administrative device trust is absent.
+
+### DET-011 — Security Control Modification
+
+Records authorised security-control modification activity.
+
+### DET-012 — Management Policy Bypass
+
+Detects successful privileged management activity without a correlated preceding management-gateway ALLOW decision.

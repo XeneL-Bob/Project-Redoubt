@@ -16,6 +16,8 @@ services:
       BOB_PASSWORD: ${BOB_PASSWORD}
       CAROL_PASSWORD: ${CAROL_PASSWORD}
       ERIN_PASSWORD: ${ERIN_PASSWORD}
+      IAN_ADMIN_PASSWORD: ${IAN_ADMIN_PASSWORD}
+      SOPHIE_ADMIN_PASSWORD: ${SOPHIE_ADMIN_PASSWORD}
     volumes:
       - ./identity/restech-realm.json:/opt/keycloak/data/import/restech-realm.json:ro
     ports:
@@ -48,6 +50,8 @@ services:
       - edge_net
       - employee_net
       - finance_net
+      - management_net
+      - management_edge_net
 
   detection:
     build:
@@ -83,6 +87,96 @@ services:
       detection:
         condition: service_started
     restart: unless-stopped
+
+
+
+  privilege-broker:
+    build:
+      context: ./management/broker
+    environment:
+      KEYCLOAK_ISSUER: http://localhost:8080/realms/restech
+      KEYCLOAK_JWKS_URL: http://keycloak:8080/realms/restech/protocol/openid-connect/certs
+      EXPECTED_AZP: redoubt-admin-cli
+
+      ELEVATION_SIGNING_KEY: ${ELEVATION_SIGNING_KEY}
+      ELEVATION_ISSUER: project-redoubt-privilege-broker
+      ELEVATION_AUDIENCE: project-redoubt-management-plane
+      MAX_ELEVATION_TTL_SECONDS: "120"
+
+      TELEMETRY_URL: http://telemetry:9000
+      TELEMETRY_INGEST_TOKEN: ${TELEMETRY_INGEST_TOKEN}
+    ports:
+      - "127.0.0.1:8101:8101"
+    networks:
+      - management_edge_net
+      - identity_net
+    depends_on:
+      keycloak:
+        condition: service_started
+      telemetry:
+        condition: service_started
+
+  admin-opa:
+    image: openpolicyagent/opa:1.17.0
+    command:
+      - run
+      - --server
+      - --addr=0.0.0.0:8181
+      - --log-format=json
+      - /policy/admin.rego
+    volumes:
+      - ./management/policy/admin.rego:/policy/admin.rego:ro
+    networks:
+      - management_policy_net
+
+  management-api:
+    build:
+      context: ./management/api
+    environment:
+      MANAGEMENT_GATEWAY_TOKEN: ${MANAGEMENT_GATEWAY_TOKEN}
+      TELEMETRY_URL: http://telemetry:9000
+      TELEMETRY_INGEST_TOKEN: ${TELEMETRY_INGEST_TOKEN}
+    networks:
+      - management_net
+    depends_on:
+      telemetry:
+        condition: service_started
+
+  management-gateway:
+    build:
+      context: ./management/gateway
+    environment:
+      KEYCLOAK_ISSUER: http://localhost:8080/realms/restech
+      KEYCLOAK_JWKS_URL: http://keycloak:8080/realms/restech/protocol/openid-connect/certs
+      EXPECTED_AZP: redoubt-admin-cli
+
+      ADMIN_OPA_DECISION_URL: http://admin-opa:8181/v1/data/restech/admin/decision
+      MANAGEMENT_API_URL: http://management-api:8201
+
+      MANAGEMENT_GATEWAY_TOKEN: ${MANAGEMENT_GATEWAY_TOKEN}
+
+      ELEVATION_SIGNING_KEY: ${ELEVATION_SIGNING_KEY}
+      ELEVATION_ISSUER: project-redoubt-privilege-broker
+      ELEVATION_AUDIENCE: project-redoubt-management-plane
+
+      TELEMETRY_URL: http://telemetry:9000
+      TELEMETRY_INGEST_TOKEN: ${TELEMETRY_INGEST_TOKEN}
+    ports:
+      - "127.0.0.1:8100:8100"
+    networks:
+      - management_edge_net
+      - identity_net
+      - management_policy_net
+      - management_net
+    depends_on:
+      keycloak:
+        condition: service_started
+      admin-opa:
+        condition: service_started
+      management-api:
+        condition: service_started
+      telemetry:
+        condition: service_started
 
   vault:
     image: hashicorp/vault:2.0.3
@@ -277,6 +371,18 @@ networks:
     internal: true
 
   secrets_net:
+    driver: bridge
+    internal: true
+
+
+  management_edge_net:
+    driver: bridge
+
+  management_policy_net:
+    driver: bridge
+    internal: true
+
+  management_net:
     driver: bridge
     internal: true
 

@@ -13,8 +13,13 @@
         "outcome": "deny",
         "resource": "finance-api"
       },
-      "attack_techniques": ["T1078"],
-      "risk_ids": ["R-001", "R-005"]
+      "attack_techniques": [
+        "T1078"
+      ],
+      "risk_ids": [
+        "R-001",
+        "R-005"
+      ]
     },
     {
       "id": "DET-002",
@@ -29,8 +34,13 @@
         "resource": "finance-api",
         "details.device_trusted": false
       },
-      "attack_techniques": ["T1078"],
-      "risk_ids": ["R-001", "R-005"]
+      "attack_techniques": [
+        "T1078"
+      ],
+      "risk_ids": [
+        "R-001",
+        "R-005"
+      ]
     },
     {
       "id": "DET-003",
@@ -46,8 +56,13 @@
       "group_by": "subject",
       "threshold": 3,
       "window_seconds": 60,
-      "attack_techniques": ["T1078"],
-      "risk_ids": ["R-001", "R-003"]
+      "attack_techniques": [
+        "T1078"
+      ],
+      "risk_ids": [
+        "R-001",
+        "R-003"
+      ]
     },
     {
       "id": "DET-004",
@@ -70,7 +85,10 @@
       "correlation_field": "correlation_id",
       "within_seconds": 30,
       "attack_techniques": [],
-      "risk_ids": ["R-004", "R-011"]
+      "risk_ids": [
+        "R-004",
+        "R-011"
+      ]
     },
     {
       "id": "DET-005",
@@ -93,7 +111,10 @@
       "correlation_field": "correlation_id",
       "within_seconds": 30,
       "attack_techniques": [],
-      "risk_ids": ["R-007", "R-011"]
+      "risk_ids": [
+        "R-007",
+        "R-011"
+      ]
     },
     {
       "id": "DET-006",
@@ -102,12 +123,140 @@
       "kind": "match",
       "severity": "high",
       "match": {
-        "source": ["employee-api", "finance-api"],
+        "source": [
+          "employee-api",
+          "finance-api"
+        ],
         "event_type": "direct_backend_access_denied",
         "outcome": "deny"
       },
       "attack_techniques": [],
-      "risk_ids": ["R-003", "R-011"]
+      "risk_ids": [
+        "R-003",
+        "R-011"
+      ]
+    },
+    {
+      "id": "DET-007",
+      "title": "Privileged Elevation Denied",
+      "description": "An identity was denied JIT privileged elevation.",
+      "kind": "match",
+      "severity": "high",
+      "match": {
+        "source": "privilege-broker",
+        "event_type": "privileged_elevation",
+        "outcome": "deny"
+      },
+      "attack_techniques": [
+        "T1078"
+      ],
+      "risk_ids": [
+        "R-002",
+        "R-008"
+      ]
+    },
+    {
+      "id": "DET-008",
+      "title": "Repeated Privileged Elevation Denials",
+      "description": "Three denied privileged-elevation attempts for the same subject within sixty seconds.",
+      "kind": "threshold",
+      "severity": "critical",
+      "match": {
+        "source": "privilege-broker",
+        "event_type": "privileged_elevation",
+        "outcome": "deny"
+      },
+      "group_by": "subject",
+      "threshold": 3,
+      "window_seconds": 60,
+      "attack_techniques": [
+        "T1078"
+      ],
+      "risk_ids": [
+        "R-002",
+        "R-008"
+      ]
+    },
+    {
+      "id": "DET-009",
+      "title": "Direct Management Backend Access Attempt",
+      "description": "A caller attempted to bypass the management PEP using an invalid workload credential.",
+      "kind": "match",
+      "severity": "critical",
+      "match": {
+        "source": "management-api",
+        "event_type": "direct_management_access_denied",
+        "outcome": "deny"
+      },
+      "attack_techniques": [],
+      "risk_ids": [
+        "R-002",
+        "R-008"
+      ]
+    },
+    {
+      "id": "DET-010",
+      "title": "Privileged Access from Untrusted Device",
+      "description": "A privileged management request was denied because administrative device trust was absent.",
+      "kind": "match",
+      "severity": "high",
+      "match": {
+        "source": "management-gateway",
+        "event_type": "privileged_policy_decision",
+        "outcome": "deny",
+        "details.admin_device_trusted": false
+      },
+      "attack_techniques": [
+        "T1078"
+      ],
+      "risk_ids": [
+        "R-002",
+        "R-008"
+      ]
+    },
+    {
+      "id": "DET-011",
+      "title": "Security Control Modification",
+      "description": "An authorised privileged operation modified security-control configuration.",
+      "kind": "match",
+      "severity": "medium",
+      "match": {
+        "source": "management-api",
+        "event_type": "privileged_operation",
+        "outcome": "allow",
+        "resource": "security-management",
+        "details.action": "update-detection"
+      },
+      "attack_techniques": [
+        "T1562.001"
+      ],
+      "risk_ids": [
+        "R-008"
+      ]
+    },
+    {
+      "id": "DET-012",
+      "title": "Management Policy Bypass",
+      "description": "A privileged management operation succeeded without a correlated management-gateway ALLOW.",
+      "kind": "missing_prior",
+      "severity": "critical",
+      "match": {
+        "source": "management-api",
+        "event_type": "privileged_operation",
+        "outcome": "allow"
+      },
+      "prior_match": {
+        "source": "management-gateway",
+        "event_type": "privileged_policy_decision",
+        "outcome": "allow"
+      },
+      "correlation_field": "correlation_id",
+      "within_seconds": 30,
+      "attack_techniques": [],
+      "risk_ids": [
+        "R-002",
+        "R-008"
+      ]
     }
   ]
 }

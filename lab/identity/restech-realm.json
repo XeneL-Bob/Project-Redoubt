@@ -28,6 +28,15 @@
       },
       {
         "name": "infrastructure-admin"
+      },
+      {
+        "name": "security-admin"
+      },
+      {
+        "name": "identity-admin"
+      },
+      {
+        "name": "backup-admin"
       }
     ]
   },
@@ -35,6 +44,16 @@
     {
       "clientId": "redoubt-test-cli",
       "name": "Project Redoubt Test CLI",
+      "enabled": true,
+      "protocol": "openid-connect",
+      "publicClient": true,
+      "standardFlowEnabled": false,
+      "directAccessGrantsEnabled": true,
+      "serviceAccountsEnabled": false
+    },
+    {
+      "clientId": "redoubt-admin-cli",
+      "name": "Project Redoubt Privileged Administration CLI",
       "enabled": true,
       "protocol": "openid-connect",
       "publicClient": true,
@@ -121,6 +140,44 @@
         "contractor"
       ],
       "email": "erin.contractor@restech.example",
+      "requiredActions": []
+    },
+    {
+      "username": "ian.infrastructure",
+      "enabled": true,
+      "emailVerified": true,
+      "firstName": "Ian",
+      "lastName": "Infrastructure",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "${IAN_ADMIN_PASSWORD}",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "infrastructure-admin"
+      ],
+      "email": "ian.infrastructure@restech.example",
+      "requiredActions": []
+    },
+    {
+      "username": "sophie.security",
+      "enabled": true,
+      "emailVerified": true,
+      "firstName": "Sophie",
+      "lastName": "Security",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "${SOPHIE_ADMIN_PASSWORD}",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "security-admin"
+      ],
+      "email": "sophie.security@restech.example",
       "requiredActions": []
     }
   ]
