@@ -1,0 +1,210 @@
+name: project-redoubt
+
+services:
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:26.7.0
+    command:
+      - start-dev
+      - --import-realm
+      - --hostname=http://localhost:8080
+    environment:
+      KC_BOOTSTRAP_ADMIN_USERNAME: admin
+      KC_BOOTSTRAP_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD}
+
+      ALICE_PASSWORD: ${ALICE_PASSWORD}
+      BOB_PASSWORD: ${BOB_PASSWORD}
+      CAROL_PASSWORD: ${CAROL_PASSWORD}
+      ERIN_PASSWORD: ${ERIN_PASSWORD}
+    volumes:
+      - ./identity/restech-realm.json:/opt/keycloak/data/import/restech-realm.json:ro
+    ports:
+      - "127.0.0.1:8080:8080"
+    networks:
+      - identity_net
+
+  opa:
+    image: openpolicyagent/opa:1.17.0
+    command:
+      - run
+      - --server
+      - --addr=0.0.0.0:8181
+      - --log-format=json
+      - /policy/restech.rego
+    volumes:
+      - ./policy/restech.rego:/policy/restech.rego:ro
+    networks:
+      - policy_net
+
+  telemetry:
+    build:
+      context: ./telemetry
+    user: "${HOST_UID}:${HOST_GID}"
+    environment:
+      TELEMETRY_INGEST_TOKEN: ${TELEMETRY_INGEST_TOKEN}
+    volumes:
+      - ../evidence/runtime:/data
+    networks:
+      - edge_net
+      - employee_net
+      - finance_net
+
+  vault:
+    image: hashicorp/vault:2.0.3
+    command:
+      - server
+      - -dev
+      - -dev-listen-address=0.0.0.0:8200
+      - -dev-root-token-id=${VAULT_DEV_ROOT_TOKEN}
+    environment:
+      VAULT_ADDR: http://0.0.0.0:8200
+    networks:
+      - secrets_net
+
+  vault-init:
+    image: hashicorp/vault:2.0.3
+    user: "0:0"
+    entrypoint:
+      - /bin/sh
+      - /config/init.sh
+    environment:
+      VAULT_ADDR: http://vault:8200
+      VAULT_TOKEN: ${VAULT_DEV_ROOT_TOKEN}
+      FINANCE_DB_PASSWORD: ${FINANCE_DB_PASSWORD}
+    volumes:
+      - ./vault/init.sh:/config/init.sh:ro
+      - ./vault/finance-api.hcl:/config/finance-api.hcl:ro
+      - vault_bootstrap:/bootstrap
+    depends_on:
+      vault:
+        condition: service_started
+    networks:
+      - secrets_net
+    restart: "no"
+
+  finance-db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: finance
+      POSTGRES_USER: finance_app
+      POSTGRES_PASSWORD: ${FINANCE_DB_PASSWORD}
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - pg_isready -U finance_app -d finance
+      interval: 3s
+      timeout: 3s
+      retries: 20
+    volumes:
+      - finance_db_data:/var/lib/postgresql/data
+    networks:
+      - data_net
+
+  employee-api:
+    build:
+      context: ./apps/employee-api
+    environment:
+      GATEWAY_EMPLOYEE_TOKEN: ${GATEWAY_EMPLOYEE_TOKEN}
+      TELEMETRY_URL: http://telemetry:9000
+      TELEMETRY_INGEST_TOKEN: ${TELEMETRY_INGEST_TOKEN}
+    networks:
+      - employee_net
+    depends_on:
+      telemetry:
+        condition: service_started
+
+  finance-api:
+    build:
+      context: ./apps/finance-api
+    environment:
+      GATEWAY_FINANCE_TOKEN: ${GATEWAY_FINANCE_TOKEN}
+
+      VAULT_ADDR: http://vault:8200
+      VAULT_ROLE_ID_FILE: /bootstrap/finance-api-role-id
+      VAULT_SECRET_ID_FILE: /bootstrap/finance-api-secret-id
+
+      TELEMETRY_URL: http://telemetry:9000
+      TELEMETRY_INGEST_TOKEN: ${TELEMETRY_INGEST_TOKEN}
+    volumes:
+      - vault_bootstrap:/bootstrap:ro
+    networks:
+      - finance_net
+      - data_net
+      - secrets_net
+    depends_on:
+      finance-db:
+        condition: service_healthy
+      vault-init:
+        condition: service_completed_successfully
+      telemetry:
+        condition: service_started
+
+  gateway:
+    build:
+      context: ./gateway
+    environment:
+      KEYCLOAK_ISSUER: http://localhost:8080/realms/restech
+      KEYCLOAK_JWKS_URL: http://keycloak:8080/realms/restech/protocol/openid-connect/certs
+      EXPECTED_AZP: redoubt-test-cli
+
+      OPA_DECISION_URL: http://opa:8181/v1/data/restech/authz/decision
+
+      EMPLOYEE_API_URL: http://employee-api:8000
+      FINANCE_API_URL: http://finance-api:8000
+
+      GATEWAY_EMPLOYEE_TOKEN: ${GATEWAY_EMPLOYEE_TOKEN}
+      GATEWAY_FINANCE_TOKEN: ${GATEWAY_FINANCE_TOKEN}
+
+      TELEMETRY_URL: http://telemetry:9000
+      TELEMETRY_INGEST_TOKEN: ${TELEMETRY_INGEST_TOKEN}
+    ports:
+      - "127.0.0.1:8000:8000"
+    networks:
+      - edge_net
+      - identity_net
+      - policy_net
+      - employee_net
+      - finance_net
+    depends_on:
+      keycloak:
+        condition: service_started
+      opa:
+        condition: service_started
+      employee-api:
+        condition: service_started
+      finance-api:
+        condition: service_started
+      telemetry:
+        condition: service_started
+
+networks:
+
+  edge_net:
+    driver: bridge
+
+  identity_net:
+    driver: bridge
+
+  policy_net:
+    driver: bridge
+    internal: true
+
+  employee_net:
+    driver: bridge
+    internal: true
+
+  finance_net:
+    driver: bridge
+    internal: true
+
+  data_net:
+    driver: bridge
+    internal: true
+
+  secrets_net:
+    driver: bridge
+    internal: true
+
+volumes:
+  finance_db_data:
+  vault_bootstrap:

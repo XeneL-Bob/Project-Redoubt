@@ -70,3 +70,7 @@ evidence/raw/
 credentials/
 secrets/
 private/
+
+# Project Redoubt runtime lab evidence
+evidence/runtime/
+lab/.env
