@@ -40,11 +40,11 @@ Accepted ADRs may still contain residual risks or limitations.
 | ADR-005 | Separate privileged administration into a management plane | Accepted |
 | ADR-006 | Centralise security telemetry and detection | Accepted |
 | ADR-007 | Isolate recovery infrastructure from production | Accepted |
-| ADR-008 | Separate release signing from deployment approval | Planned |
-| ADR-009 | Treat verification as distinct from deployment authority | Planned |
-| ADR-010 | Use OpenTofu for declarative infrastructure modelling | Planned |
-| ADR-011 | Use OPA for infrastructure Policy as Code | Planned |
-| ADR-012 | Evaluate infrastructure plans before deployment authority | Planned |
+| ADR-008 | Separate release signing from deployment approval | Accepted |
+| ADR-009 | Treat verification as distinct from deployment authority | Accepted |
+| ADR-010 | Use OpenTofu for declarative infrastructure modelling | Accepted |
+| ADR-011 | Use OPA for infrastructure Policy as Code | Accepted |
+| ADR-012 | Evaluate infrastructure plans before deployment authority | Accepted |
 
 ## Architecture Decision Chain
 
@@ -75,3 +75,9 @@ They explain why a control architecture exists before describing how it is imple
 These ADRs document the Project Redoubt reference architecture for the fictional ResTech enterprise.
 
 They are architecture records, not claims that the design has been deployed in a production enterprise environment.
+
+## Supporting Governance Documents
+
+- `decision-map.md` — maps architecture decisions to security objectives and implementation evidence.
+- `phase-12-acceptance.md` — records Phase 12 completion criteria, assurance scope and limitations.
+

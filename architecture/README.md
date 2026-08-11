@@ -166,3 +166,42 @@ This capability ensures that selected architectural invariants are evaluated aut
 The Infrastructure Governance capability does not replace the Identity, Policy, Enforcement, Management, Telemetry or Recovery planes.
 
 It governs how infrastructure supporting those planes may be changed.
+
+## Architecture Decision Governance
+
+Significant Project Redoubt architecture decisions are documented using Architecture Decision Records.
+
+The ADR catalogue is maintained in:
+
+- `docs/adr/README.md`
+
+The decision map is maintained in:
+
+- `docs/adr/decision-map.md`
+
+The architecture reasoning model is:
+
+    Business Requirements
+            ↓
+    Security Requirements
+            ↓
+    Risks and Threats
+            ↓
+    Security Objectives
+            ↓
+    Architecture Decisions
+            ↓
+    Architecture Controls
+            ↓
+    Implementation
+            ↓
+    Validation
+            ↓
+    Evidence
+
+Architecture Decision Records explain why a significant security architecture choice was made, the alternatives considered, its consequences, residual risks and the evidence supporting it.
+
+ADRs complement rather than replace the existing control-traceability model.
+
+A documented architecture decision is not treated as proof that the control works. Assurance remains dependent on implementation, testing and evidence.
+
