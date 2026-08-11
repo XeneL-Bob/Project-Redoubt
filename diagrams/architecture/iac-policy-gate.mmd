@@ -1,0 +1,29 @@
+flowchart TD
+
+    A[Infrastructure Change] --> B[OpenTofu Configuration]
+
+    B --> C[OpenTofu Validate]
+
+    C --> D[Saved OpenTofu Plan]
+
+    D --> E[Plan JSON]
+
+    E --> F[OPA Infrastructure Policy]
+
+    F --> G{Security Decision}
+
+    G -->|DENY| H[Reject Change]
+    G -->|ALLOW| I[Eligible for Deployment Workflow]
+
+    F --> J[IAC-001 to IAC-011]
+
+    D --> K[Plan SHA-256]
+    F --> L[Policy SHA-256]
+    M[Provider Lockfile] --> N[Lockfile SHA-256]
+
+    K --> O[Policy Evidence]
+    L --> O
+    N --> O
+    G --> O
+
+    O --> P[GitHub Actions Evidence Artifact]
