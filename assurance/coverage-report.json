@@ -1,0 +1,106 @@
+{
+  "schema": "project-redoubt.assurance-coverage-report/v1",
+  "summary": {
+    "security_requirements_total": 25,
+    "security_requirements_mapped_to_objectives": 25,
+    "crown_jewels_total": 10,
+    "crown_jewels_mapped_to_objectives": 10,
+    "risks_total": 12,
+    "risks_with_architecture_controls": 11,
+    "risks_with_detection_mapping": 9,
+    "risks_with_evidence": 11,
+    "attack_paths_total": 8,
+    "attack_paths_with_evidence": 7,
+    "security_objectives_total": 12,
+    "security_objectives_with_adr_mapping": 12,
+    "security_objectives_with_evidence": 12,
+    "architecture_controls_total": 14,
+    "architecture_controls_with_evidence": 11,
+    "evidence_packages": 6,
+    "attack_path_statuses": {
+      "DEFERRED": 1,
+      "PARTIALLY_VALIDATED": 5,
+      "SUBSTANTIALLY_VALIDATED": 2
+    }
+  },
+  "gaps": [
+    {
+      "id": "GAP-001",
+      "severity": "MEDIUM",
+      "type": "TRACEABILITY",
+      "title": "Business requirement to security requirement relationships are not machine-readable",
+      "detail": "The assurance model contains BR and SR identifiers, but does not yet contain an explicit BR-to-SR relationship layer."
+    },
+    {
+      "id": "GAP-002",
+      "severity": "MEDIUM",
+      "type": "TRACEABILITY",
+      "title": "Security requirements with implementation evidence are not explicitly mapped to security objectives",
+      "identifiers": []
+    },
+    {
+      "id": "GAP-003",
+      "severity": "HIGH",
+      "type": "ASSURANCE",
+      "title": "Research intellectual-property theft remains outside current technical validation",
+      "identifiers": [
+        "R-012",
+        "AP-006"
+      ]
+    },
+    {
+      "id": "GAP-004",
+      "severity": "MEDIUM",
+      "type": "CONTROL_VALIDATION",
+      "title": "Architecture controls without direct validation evidence packages",
+      "identifiers": [
+        "CTRL-001",
+        "CTRL-011",
+        "CTRL-013"
+      ]
+    },
+    {
+      "id": "GAP-005",
+      "severity": "MEDIUM",
+      "type": "DETECTION",
+      "title": "Risks without explicit detection mapping",
+      "identifiers": [
+        "R-009",
+        "R-010",
+        "R-012"
+      ]
+    },
+    {
+      "id": "GAP-006",
+      "severity": "MEDIUM",
+      "type": "TRACEABILITY",
+      "title": "Risk-to-crown-jewel relationships remain documented in the risk register but are not yet represented in the machine-readable assurance graph"
+    }
+  ],
+  "detail": {
+    "security_requirements_without_objective_mapping": [],
+    "security_requirements_without_objective_mapping_but_with_evidence": [],
+    "crown_jewels_without_objective_mapping": [],
+    "objectives_without_adr_mapping": [],
+    "risks_without_architecture_controls": [
+      "R-012"
+    ],
+    "risks_without_detection_mapping": [
+      "R-009",
+      "R-010",
+      "R-012"
+    ],
+    "risks_without_evidence": [
+      "R-012"
+    ],
+    "attack_paths_without_evidence": [
+      "AP-006"
+    ],
+    "objectives_without_evidence": [],
+    "controls_without_evidence": [
+      "CTRL-001",
+      "CTRL-011",
+      "CTRL-013"
+    ]
+  }
+}

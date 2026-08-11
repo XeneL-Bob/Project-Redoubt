@@ -1,0 +1,1163 @@
+{
+  "schema": "project-redoubt.assurance-graph/v1",
+  "description": "Machine-readable relationships between Project Redoubt requirements, crown jewels, risks, attack paths, security objectives, ADRs, architecture controls, adversary scenarios, detections and infrastructure security controls.",
+  "objective_mappings": [
+    {
+      "id": "SO-001",
+      "security_requirements": [
+        "SR-001",
+        "SR-002",
+        "SR-003",
+        "SR-004",
+        "SR-015"
+      ],
+      "business_requirements": [],
+      "crown_jewels": [
+        "CJ-001",
+        "CJ-002"
+      ]
+    },
+    {
+      "id": "SO-002",
+      "security_requirements": [
+        "SR-002",
+        "SR-006",
+        "SR-022"
+      ],
+      "business_requirements": [],
+      "crown_jewels": [
+        "CJ-001",
+        "CJ-002",
+        "CJ-008"
+      ]
+    },
+    {
+      "id": "SO-003",
+      "security_requirements": [
+        "SR-003",
+        "SR-007",
+        "SR-013",
+        "SR-024"
+      ],
+      "business_requirements": [],
+      "crown_jewels": []
+    },
+    {
+      "id": "SO-004",
+      "security_requirements": [
+        "SR-002",
+        "SR-008",
+        "SR-017",
+        "SR-018"
+      ],
+      "business_requirements": [],
+      "crown_jewels": [
+        "CJ-003",
+        "CJ-004",
+        "CJ-007"
+      ]
+    },
+    {
+      "id": "SO-005",
+      "security_requirements": [
+        "SR-003",
+        "SR-009",
+        "SR-010"
+      ],
+      "business_requirements": [],
+      "crown_jewels": [
+        "CJ-003",
+        "CJ-004",
+        "CJ-006",
+        "CJ-008"
+      ]
+    },
+    {
+      "id": "SO-006",
+      "security_requirements": [
+        "SR-002",
+        "SR-010",
+        "SR-023",
+        "SR-025"
+      ],
+      "business_requirements": [],
+      "crown_jewels": [
+        "CJ-005",
+        "CJ-006"
+      ]
+    },
+    {
+      "id": "SO-007",
+      "security_requirements": [
+        "SR-011",
+        "SR-012",
+        "SR-021",
+        "SR-022"
+      ],
+      "business_requirements": [],
+      "crown_jewels": [
+        "CJ-009"
+      ]
+    },
+    {
+      "id": "SO-008",
+      "security_requirements": [
+        "SR-013",
+        "SR-016",
+        "SR-021"
+      ],
+      "business_requirements": [],
+      "crown_jewels": []
+    },
+    {
+      "id": "SO-009",
+      "security_requirements": [
+        "SR-007",
+        "SR-014",
+        "SR-019",
+        "SR-024"
+      ],
+      "business_requirements": [],
+      "crown_jewels": []
+    },
+    {
+      "id": "SO-010",
+      "security_requirements": [
+        "SR-020"
+      ],
+      "business_requirements": [
+        "BR-008"
+      ],
+      "crown_jewels": [
+        "CJ-001",
+        "CJ-003",
+        "CJ-004",
+        "CJ-010"
+      ]
+    },
+    {
+      "id": "SO-011",
+      "security_requirements": [
+        "SR-005",
+        "SR-014",
+        "SR-025"
+      ],
+      "business_requirements": [],
+      "crown_jewels": []
+    },
+    {
+      "id": "SO-012",
+      "security_requirements": [
+        "SR-023",
+        "SR-024"
+      ],
+      "business_requirements": [],
+      "crown_jewels": []
+    }
+  ],
+  "attack_paths": [
+    {
+      "id": "AP-001",
+      "risks": [
+        "R-001",
+        "R-003"
+      ],
+      "status": "PARTIALLY_VALIDATED"
+    },
+    {
+      "id": "AP-002",
+      "risks": [
+        "R-002",
+        "R-008",
+        "R-009"
+      ],
+      "status": "PARTIALLY_VALIDATED"
+    },
+    {
+      "id": "AP-003",
+      "risks": [
+        "R-004",
+        "R-007",
+        "R-011"
+      ],
+      "status": "SUBSTANTIALLY_VALIDATED"
+    },
+    {
+      "id": "AP-004",
+      "risks": [
+        "R-006"
+      ],
+      "status": "SUBSTANTIALLY_VALIDATED"
+    },
+    {
+      "id": "AP-005",
+      "risks": [
+        "R-002",
+        "R-003",
+        "R-009"
+      ],
+      "status": "PARTIALLY_VALIDATED"
+    },
+    {
+      "id": "AP-006",
+      "risks": [
+        "R-012"
+      ],
+      "status": "DEFERRED"
+    },
+    {
+      "id": "AP-007",
+      "risks": [
+        "R-010"
+      ],
+      "status": "PARTIALLY_VALIDATED"
+    },
+    {
+      "id": "AP-008",
+      "risks": [
+        "R-008"
+      ],
+      "status": "PARTIALLY_VALIDATED"
+    }
+  ],
+  "adrs": [
+    {
+      "id": "ADR-001",
+      "objectives": [
+        "SO-001",
+        "SO-003",
+        "SO-004",
+        "SO-009"
+      ]
+    },
+    {
+      "id": "ADR-002",
+      "objectives": [
+        "SO-003",
+        "SO-004",
+        "SO-009",
+        "SO-011"
+      ]
+    },
+    {
+      "id": "ADR-003",
+      "objectives": [
+        "SO-001",
+        "SO-002",
+        "SO-004",
+        "SO-009"
+      ]
+    },
+    {
+      "id": "ADR-004",
+      "objectives": [
+        "SO-004",
+        "SO-005",
+        "SO-009"
+      ]
+    },
+    {
+      "id": "ADR-005",
+      "objectives": [
+        "SO-002",
+        "SO-009"
+      ]
+    },
+    {
+      "id": "ADR-006",
+      "objectives": [
+        "SO-007",
+        "SO-008",
+        "SO-012"
+      ]
+    },
+    {
+      "id": "ADR-007",
+      "objectives": [
+        "SO-009",
+        "SO-010",
+        "SO-012"
+      ]
+    },
+    {
+      "id": "ADR-008",
+      "objectives": [
+        "SO-006",
+        "SO-009",
+        "SO-012"
+      ]
+    },
+    {
+      "id": "ADR-009",
+      "objectives": [
+        "SO-006",
+        "SO-009",
+        "SO-011",
+        "SO-012"
+      ]
+    },
+    {
+      "id": "ADR-010",
+      "objectives": [
+        "SO-003",
+        "SO-004",
+        "SO-010",
+        "SO-011",
+        "SO-012"
+      ]
+    },
+    {
+      "id": "ADR-011",
+      "objectives": [
+        "SO-003",
+        "SO-004",
+        "SO-007",
+        "SO-010",
+        "SO-011",
+        "SO-012"
+      ]
+    },
+    {
+      "id": "ADR-012",
+      "objectives": [
+        "SO-003",
+        "SO-004",
+        "SO-007",
+        "SO-010",
+        "SO-011",
+        "SO-012"
+      ]
+    }
+  ],
+  "architecture_controls": [
+    {
+      "id": "CTRL-001",
+      "name": "MFA",
+      "domain": "Identity",
+      "risks": [
+        "R-001",
+        "R-002"
+      ],
+      "attack_paths": [
+        "AP-001",
+        "AP-002"
+      ],
+      "adrs": [
+        "ADR-001"
+      ]
+    },
+    {
+      "id": "CTRL-002",
+      "name": "Privileged identity separation",
+      "domain": "Identity / Management",
+      "risks": [
+        "R-002"
+      ],
+      "attack_paths": [
+        "AP-002",
+        "AP-005"
+      ],
+      "adrs": [
+        "ADR-005"
+      ]
+    },
+    {
+      "id": "CTRL-003",
+      "name": "Central policy engine",
+      "domain": "Authorisation",
+      "risks": [
+        "R-001",
+        "R-004",
+        "R-010",
+        "R-011"
+      ],
+      "attack_paths": [
+        "AP-001",
+        "AP-003",
+        "AP-007"
+      ],
+      "adrs": [
+        "ADR-002",
+        "ADR-003"
+      ]
+    },
+    {
+      "id": "CTRL-004",
+      "name": "Policy enforcement points",
+      "domain": "Zero Trust",
+      "risks": [
+        "R-001",
+        "R-003",
+        "R-011"
+      ],
+      "attack_paths": [
+        "AP-001",
+        "AP-003"
+      ],
+      "adrs": [
+        "ADR-002",
+        "ADR-003"
+      ]
+    },
+    {
+      "id": "CTRL-005",
+      "name": "Network segmentation",
+      "domain": "Network",
+      "risks": [
+        "R-003",
+        "R-004",
+        "R-011"
+      ],
+      "attack_paths": [
+        "AP-001",
+        "AP-003",
+        "AP-005"
+      ],
+      "adrs": [
+        "ADR-001",
+        "ADR-007"
+      ]
+    },
+    {
+      "id": "CTRL-006",
+      "name": "Database isolation",
+      "domain": "Data",
+      "risks": [
+        "R-003",
+        "R-004",
+        "R-005"
+      ],
+      "attack_paths": [
+        "AP-003"
+      ],
+      "adrs": [
+        "ADR-001"
+      ]
+    },
+    {
+      "id": "CTRL-007",
+      "name": "Workload identity",
+      "domain": "Workload",
+      "risks": [
+        "R-004",
+        "R-007",
+        "R-011"
+      ],
+      "attack_paths": [
+        "AP-003"
+      ],
+      "adrs": [
+        "ADR-004"
+      ]
+    },
+    {
+      "id": "CTRL-008",
+      "name": "Secrets manager",
+      "domain": "Secrets",
+      "risks": [
+        "R-006",
+        "R-007",
+        "R-011"
+      ],
+      "attack_paths": [
+        "AP-003",
+        "AP-004"
+      ],
+      "adrs": [
+        "ADR-004"
+      ]
+    },
+    {
+      "id": "CTRL-009",
+      "name": "Protected CI/CD",
+      "domain": "Development",
+      "risks": [
+        "R-006"
+      ],
+      "attack_paths": [
+        "AP-004"
+      ],
+      "adrs": [
+        "ADR-008",
+        "ADR-009"
+      ]
+    },
+    {
+      "id": "CTRL-010",
+      "name": "Central telemetry",
+      "domain": "Security",
+      "risks": [
+        "R-001",
+        "R-002",
+        "R-003",
+        "R-008"
+      ],
+      "attack_paths": [],
+      "attack_path_scope": "MULTIPLE",
+      "adrs": [
+        "ADR-006"
+      ]
+    },
+    {
+      "id": "CTRL-011",
+      "name": "Tamper-resistant logs",
+      "domain": "Security",
+      "risks": [
+        "R-008"
+      ],
+      "attack_paths": [
+        "AP-008"
+      ],
+      "adrs": [
+        "ADR-006"
+      ]
+    },
+    {
+      "id": "CTRL-012",
+      "name": "Isolated backups",
+      "domain": "Recovery",
+      "risks": [
+        "R-009"
+      ],
+      "attack_paths": [
+        "AP-005"
+      ],
+      "adrs": [
+        "ADR-007"
+      ]
+    },
+    {
+      "id": "CTRL-013",
+      "name": "Contractor expiry",
+      "domain": "Identity",
+      "risks": [
+        "R-010"
+      ],
+      "attack_paths": [
+        "AP-007"
+      ],
+      "adrs": []
+    },
+    {
+      "id": "CTRL-014",
+      "name": "Infrastructure policy gate",
+      "domain": "Infrastructure / Governance",
+      "risks": [
+        "R-003",
+        "R-004",
+        "R-006",
+        "R-008",
+        "R-009",
+        "R-011"
+      ],
+      "attack_paths": [
+        "AP-003",
+        "AP-004",
+        "AP-005",
+        "AP-008"
+      ],
+      "adrs": [
+        "ADR-010",
+        "ADR-011",
+        "ADR-012"
+      ]
+    }
+  ],
+  "adversary_scenarios": [
+    {
+      "id": "ADV-001",
+      "attack_paths": [
+        "AP-001"
+      ],
+      "risks": [
+        "R-001",
+        "R-003"
+      ],
+      "preventive_control": "OPA least privilege",
+      "detections": [
+        "DET-001"
+      ]
+    },
+    {
+      "id": "ADV-002",
+      "attack_paths": [
+        "AP-001"
+      ],
+      "risks": [
+        "R-001",
+        "R-005"
+      ],
+      "preventive_control": "Device trust policy",
+      "detections": [
+        "DET-002"
+      ]
+    },
+    {
+      "id": "ADV-003",
+      "attack_paths": [
+        "AP-001"
+      ],
+      "risks": [
+        "R-001",
+        "R-003"
+      ],
+      "preventive_control": "Default-deny authorisation",
+      "detections": [
+        "DET-003"
+      ]
+    },
+    {
+      "id": "ADV-004",
+      "attack_paths": [
+        "AP-007"
+      ],
+      "risks": [
+        "R-010"
+      ],
+      "preventive_control": "Contractor least privilege",
+      "detections": []
+    },
+    {
+      "id": "ADV-005",
+      "attack_paths": [
+        "AP-001",
+        "AP-003"
+      ],
+      "risks": [
+        "R-003",
+        "R-011"
+      ],
+      "preventive_control": "Application segmentation",
+      "detections": []
+    },
+    {
+      "id": "ADV-006",
+      "attack_paths": [
+        "AP-003"
+      ],
+      "risks": [
+        "R-004",
+        "R-011"
+      ],
+      "preventive_control": "Data-tier segmentation",
+      "detections": []
+    },
+    {
+      "id": "ADV-007",
+      "attack_paths": [
+        "AP-003"
+      ],
+      "risks": [
+        "R-003",
+        "R-011"
+      ],
+      "preventive_control": "Workload gateway credential",
+      "detections": [
+        "DET-006"
+      ]
+    },
+    {
+      "id": "ADV-008",
+      "attack_paths": [
+        "AP-003"
+      ],
+      "risks": [
+        "R-004",
+        "R-011"
+      ],
+      "preventive_control": "Policy-path monitoring",
+      "detections": [
+        "DET-004"
+      ]
+    },
+    {
+      "id": "ADV-009",
+      "attack_paths": [
+        "AP-003"
+      ],
+      "risks": [
+        "R-007",
+        "R-011"
+      ],
+      "preventive_control": "Secret-access correlation",
+      "detections": [
+        "DET-005"
+      ]
+    },
+    {
+      "id": "ADV-010",
+      "attack_paths": [
+        "AP-004"
+      ],
+      "risks": [
+        "R-006"
+      ],
+      "preventive_control": "Clean-source build policy",
+      "detections": [
+        "DET-016"
+      ]
+    },
+    {
+      "id": "ADV-011",
+      "attack_paths": [
+        "AP-004"
+      ],
+      "risks": [
+        "R-006"
+      ],
+      "preventive_control": "Artifact digest verification",
+      "detections": [
+        "DET-013"
+      ]
+    },
+    {
+      "id": "ADV-012",
+      "attack_paths": [
+        "AP-004"
+      ],
+      "risks": [
+        "R-006"
+      ],
+      "preventive_control": "Signed provenance",
+      "detections": [
+        "DET-014"
+      ]
+    },
+    {
+      "id": "ADV-013",
+      "attack_paths": [
+        "AP-004"
+      ],
+      "risks": [
+        "R-006"
+      ],
+      "preventive_control": "Trusted-builder policy",
+      "detections": [
+        "DET-015"
+      ]
+    },
+    {
+      "id": "ADV-014",
+      "attack_paths": [
+        "AP-004"
+      ],
+      "risks": [
+        "R-006"
+      ],
+      "preventive_control": "Mandatory signed provenance",
+      "detections": [
+        "DET-017"
+      ]
+    },
+    {
+      "id": "ADV-015",
+      "attack_paths": [
+        "AP-004"
+      ],
+      "risks": [
+        "R-006"
+      ],
+      "preventive_control": "Trusted-build correlation and independent deployment approval gate",
+      "detections": [
+        "DET-018",
+        "DET-019",
+        "DET-020"
+      ]
+    },
+    {
+      "id": "ADV-016",
+      "attack_paths": [
+        "AP-004"
+      ],
+      "risks": [
+        "R-006"
+      ],
+      "preventive_control": "Builder/signer key separation",
+      "detections": []
+    }
+  ],
+  "detections": [
+    {
+      "id": "DET-001",
+      "risks": [
+        "R-001",
+        "R-005"
+      ]
+    },
+    {
+      "id": "DET-002",
+      "risks": [
+        "R-001",
+        "R-005"
+      ]
+    },
+    {
+      "id": "DET-003",
+      "risks": [
+        "R-001",
+        "R-003"
+      ]
+    },
+    {
+      "id": "DET-004",
+      "risks": [
+        "R-004",
+        "R-011"
+      ]
+    },
+    {
+      "id": "DET-005",
+      "risks": [
+        "R-007",
+        "R-011"
+      ]
+    },
+    {
+      "id": "DET-006",
+      "risks": [
+        "R-003",
+        "R-011"
+      ]
+    },
+    {
+      "id": "DET-007",
+      "risks": [
+        "R-002",
+        "R-008"
+      ]
+    },
+    {
+      "id": "DET-008",
+      "risks": [
+        "R-002",
+        "R-008"
+      ]
+    },
+    {
+      "id": "DET-009",
+      "risks": [
+        "R-002",
+        "R-008"
+      ]
+    },
+    {
+      "id": "DET-010",
+      "risks": [
+        "R-002",
+        "R-008"
+      ]
+    },
+    {
+      "id": "DET-011",
+      "risks": [
+        "R-008"
+      ]
+    },
+    {
+      "id": "DET-012",
+      "risks": [
+        "R-002",
+        "R-008"
+      ]
+    },
+    {
+      "id": "DET-013",
+      "risks": [
+        "R-006"
+      ]
+    },
+    {
+      "id": "DET-014",
+      "risks": [
+        "R-006"
+      ]
+    },
+    {
+      "id": "DET-015",
+      "risks": [
+        "R-006"
+      ]
+    },
+    {
+      "id": "DET-016",
+      "risks": [
+        "R-006"
+      ]
+    },
+    {
+      "id": "DET-017",
+      "risks": [
+        "R-006"
+      ]
+    },
+    {
+      "id": "DET-018",
+      "risks": [
+        "R-006"
+      ]
+    },
+    {
+      "id": "DET-019",
+      "risks": [
+        "R-006"
+      ]
+    },
+    {
+      "id": "DET-020",
+      "risks": [
+        "R-006"
+      ]
+    }
+  ],
+  "iac_controls": [
+    {
+      "id": "IAC-001",
+      "requirement": "Internet ingress must be HTTPS only",
+      "result": "PASS"
+    },
+    {
+      "id": "IAC-002",
+      "requirement": "SSH must not be Internet exposed",
+      "result": "PASS"
+    },
+    {
+      "id": "IAC-003",
+      "requirement": "Private zones must not auto-assign public IPs",
+      "result": "PASS"
+    },
+    {
+      "id": "IAC-004",
+      "requirement": "Internet default routes belong only in the edge zone",
+      "result": "PASS"
+    },
+    {
+      "id": "IAC-005",
+      "requirement": "Security evidence must block public access",
+      "result": "PASS"
+    },
+    {
+      "id": "IAC-006",
+      "requirement": "Security evidence must use KMS encryption",
+      "result": "PASS"
+    },
+    {
+      "id": "IAC-007",
+      "requirement": "Evidence versioning must remain enabled",
+      "result": "PASS"
+    },
+    {
+      "id": "IAC-008",
+      "requirement": "KMS rotation must remain enabled",
+      "result": "PASS"
+    },
+    {
+      "id": "IAC-009",
+      "requirement": "Network telemetry must capture all traffic",
+      "result": "PASS"
+    },
+    {
+      "id": "IAC-010",
+      "requirement": "Security-sensitive resources require metadata",
+      "result": "PASS"
+    },
+    {
+      "id": "IAC-011",
+      "requirement": "Unrestricted Internet egress is prohibited",
+      "result": "PASS"
+    }
+  ],
+  "iac_objective_scope": [
+    "SO-003",
+    "SO-004",
+    "SO-007",
+    "SO-010",
+    "SO-011",
+    "SO-012"
+  ],
+  "business_requirement_mappings": [
+    {
+      "id": "BR-001",
+      "security_requirements": [
+        "SR-001",
+        "SR-003",
+        "SR-004",
+        "SR-015",
+        "SR-016"
+      ]
+    },
+    {
+      "id": "BR-002",
+      "security_requirements": [
+        "SR-003",
+        "SR-007",
+        "SR-018",
+        "SR-021",
+        "SR-025"
+      ]
+    },
+    {
+      "id": "BR-003",
+      "security_requirements": [
+        "SR-020"
+      ]
+    },
+    {
+      "id": "BR-004",
+      "security_requirements": [
+        "SR-002",
+        "SR-012",
+        "SR-017",
+        "SR-018",
+        "SR-024"
+      ]
+    },
+    {
+      "id": "BR-005",
+      "security_requirements": [
+        "SR-002",
+        "SR-008",
+        "SR-009",
+        "SR-012",
+        "SR-017",
+        "SR-018"
+      ]
+    },
+    {
+      "id": "BR-006",
+      "security_requirements": [
+        "SR-002",
+        "SR-009",
+        "SR-010",
+        "SR-023",
+        "SR-025"
+      ]
+    },
+    {
+      "id": "BR-007",
+      "security_requirements": [
+        "SR-002",
+        "SR-005",
+        "SR-007",
+        "SR-012",
+        "SR-014"
+      ]
+    },
+    {
+      "id": "BR-008",
+      "security_requirements": [
+        "SR-019",
+        "SR-020",
+        "SR-023"
+      ]
+    },
+    {
+      "id": "BR-009",
+      "security_requirements": [
+        "SR-011",
+        "SR-012",
+        "SR-021",
+        "SR-022",
+        "SR-023"
+      ]
+    },
+    {
+      "id": "BR-010",
+      "security_requirements": [
+        "SR-004",
+        "SR-005",
+        "SR-011",
+        "SR-021",
+        "SR-025"
+      ]
+    }
+  ],
+  "risk_crown_jewel_mappings": [
+    {
+      "id": "R-001",
+      "crown_jewels": [
+        "CJ-001",
+        "CJ-003"
+      ]
+    },
+    {
+      "id": "R-002",
+      "crown_jewels": [
+        "CJ-001",
+        "CJ-002",
+        "CJ-008",
+        "CJ-009",
+        "CJ-010"
+      ]
+    },
+    {
+      "id": "R-003",
+      "crown_jewels": [
+        "CJ-001",
+        "CJ-003",
+        "CJ-004",
+        "CJ-009"
+      ]
+    },
+    {
+      "id": "R-004",
+      "crown_jewels": [
+        "CJ-003"
+      ]
+    },
+    {
+      "id": "R-005",
+      "crown_jewels": [
+        "CJ-004"
+      ]
+    },
+    {
+      "id": "R-006",
+      "crown_jewels": [
+        "CJ-005",
+        "CJ-006"
+      ]
+    },
+    {
+      "id": "R-007",
+      "crown_jewels": [
+        "CJ-008"
+      ]
+    },
+    {
+      "id": "R-008",
+      "crown_jewels": [
+        "CJ-009"
+      ]
+    },
+    {
+      "id": "R-009",
+      "crown_jewels": [
+        "CJ-001",
+        "CJ-003",
+        "CJ-004",
+        "CJ-010"
+      ]
+    },
+    {
+      "id": "R-010",
+      "crown_jewels": [
+        "CJ-003",
+        "CJ-007"
+      ]
+    },
+    {
+      "id": "R-011",
+      "crown_jewels": [
+        "CJ-003",
+        "CJ-004",
+        "CJ-008"
+      ]
+    },
+    {
+      "id": "R-012",
+      "crown_jewels": [
+        "CJ-007"
+      ]
+    }
+  ]
+}

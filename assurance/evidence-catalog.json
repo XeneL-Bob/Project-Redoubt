@@ -1,0 +1,395 @@
+{
+  "schema": "project-redoubt.assurance-evidence-catalog/v1",
+  "evidence_packages": [
+    {
+      "id": "EVID-001",
+      "name": "Zero Trust Application Control Validation",
+      "assurance_status": "VALIDATED",
+      "supports_security_requirements": [
+        "SR-002",
+        "SR-003",
+        "SR-005",
+        "SR-007",
+        "SR-008",
+        "SR-009",
+        "SR-010",
+        "SR-011",
+        "SR-012",
+        "SR-013",
+        "SR-014",
+        "SR-015",
+        "SR-021",
+        "SR-023",
+        "SR-024",
+        "SR-025"
+      ],
+      "risks": [
+        "R-001",
+        "R-003",
+        "R-004",
+        "R-005",
+        "R-007",
+        "R-010",
+        "R-011"
+      ],
+      "attack_paths": [
+        "AP-001",
+        "AP-003",
+        "AP-007"
+      ],
+      "objectives": [
+        "SO-001",
+        "SO-003",
+        "SO-004",
+        "SO-005",
+        "SO-007",
+        "SO-008",
+        "SO-009",
+        "SO-011",
+        "SO-012"
+      ],
+      "controls": [
+        "CTRL-003",
+        "CTRL-004",
+        "CTRL-005",
+        "CTRL-006",
+        "CTRL-007",
+        "CTRL-008",
+        "CTRL-010"
+      ],
+      "adversary_scenarios": [
+        "ADV-001",
+        "ADV-002",
+        "ADV-003",
+        "ADV-004",
+        "ADV-005",
+        "ADV-006",
+        "ADV-007",
+        "ADV-008",
+        "ADV-009"
+      ],
+      "detections": [
+        "DET-001",
+        "DET-002",
+        "DET-003",
+        "DET-004",
+        "DET-005",
+        "DET-006"
+      ],
+      "iac_controls": [],
+      "tests": [
+        "lab/tests/policy-test.sh",
+        "lab/tests/smoke.sh",
+        "lab/tests/segmentation-test.sh",
+        "lab/tests/detection-test.py",
+        "lab/tests/detection-test.sh"
+      ],
+      "documentation": [
+        "docs/adversary/control-validation-matrix.md",
+        "docs/adversary/attack-path-coverage.md",
+        "docs/detection/detection-catalog.md"
+      ],
+      "scope_note": "Validates implemented Zero Trust application, authorisation, segmentation, workload and detection controls.",
+      "limitations": [
+        "Does not validate phishing resistance.",
+        "Does not validate production endpoint compromise.",
+        "Does not validate enterprise MFA strength.",
+        "Contractor account expiry is not exercised."
+      ]
+    },
+    {
+      "id": "EVID-002",
+      "name": "Privileged Management Plane Validation",
+      "assurance_status": "VALIDATED",
+      "supports_security_requirements": [
+        "SR-002",
+        "SR-006",
+        "SR-007",
+        "SR-011",
+        "SR-013",
+        "SR-014",
+        "SR-015",
+        "SR-021",
+        "SR-022",
+        "SR-023",
+        "SR-024"
+      ],
+      "risks": [
+        "R-002",
+        "R-008"
+      ],
+      "attack_paths": [
+        "AP-002",
+        "AP-008"
+      ],
+      "objectives": [
+        "SO-002",
+        "SO-003",
+        "SO-007",
+        "SO-008",
+        "SO-009",
+        "SO-012"
+      ],
+      "controls": [
+        "CTRL-002",
+        "CTRL-003",
+        "CTRL-004",
+        "CTRL-005",
+        "CTRL-010"
+      ],
+      "adversary_scenarios": [],
+      "detections": [
+        "DET-007",
+        "DET-008",
+        "DET-009",
+        "DET-010",
+        "DET-011",
+        "DET-012"
+      ],
+      "iac_controls": [],
+      "tests": [
+        "lab/tests/privileged-access-test.sh",
+        "lab/tests/privileged-detection-live.sh",
+        "lab/tests/privileged-detection-test.py"
+      ],
+      "documentation": [
+        "docs/privileged-access/management-plane-implementation.md",
+        "docs/privileged-access/privileged-detection.md"
+      ],
+      "scope_note": "Validates the implemented JIT privileged-access and management-plane control path.",
+      "limitations": [
+        "AP-002 remains only partially validated.",
+        "AP-008 remains only partially validated.",
+        "No phishing-resistant MFA validation.",
+        "No production PAM integration.",
+        "No immutable administrative audit trail."
+      ]
+    },
+    {
+      "id": "EVID-003",
+      "name": "Recovery Architecture Validation",
+      "assurance_status": "VALIDATED",
+      "supports_security_requirements": [
+        "SR-007",
+        "SR-018",
+        "SR-020",
+        "SR-023",
+        "SR-024"
+      ],
+      "risks": [
+        "R-009"
+      ],
+      "attack_paths": [
+        "AP-005"
+      ],
+      "objectives": [
+        "SO-009",
+        "SO-010",
+        "SO-012"
+      ],
+      "controls": [
+        "CTRL-012"
+      ],
+      "adversary_scenarios": [],
+      "detections": [],
+      "iac_controls": [],
+      "tests": [
+        "lab/tests/incident-recovery-test.sh",
+        "lab/recovery/backup.sh",
+        "lab/recovery/restore.sh"
+      ],
+      "documentation": [
+        "docs/recovery/recovery-validation.md",
+        "docs/recovery/resilience-findings.md"
+      ],
+      "scope_note": "Validates protected backup creation, integrity checking and restoration into an isolated recovery environment.",
+      "limitations": [
+        "AP-005 remains only partially validated.",
+        "No immutable or offline backup validation.",
+        "No backup-administrator compromise validation.",
+        "No enterprise-wide ransomware simulation."
+      ]
+    },
+    {
+      "id": "EVID-004",
+      "name": "Software Supply Chain Validation",
+      "assurance_status": "VALIDATED",
+      "supports_security_requirements": [
+        "SR-002",
+        "SR-009",
+        "SR-010",
+        "SR-011",
+        "SR-012",
+        "SR-021",
+        "SR-023",
+        "SR-024",
+        "SR-025"
+      ],
+      "risks": [
+        "R-006"
+      ],
+      "attack_paths": [
+        "AP-004"
+      ],
+      "objectives": [
+        "SO-006",
+        "SO-007",
+        "SO-008",
+        "SO-009",
+        "SO-011",
+        "SO-012"
+      ],
+      "controls": [
+        "CTRL-009",
+        "CTRL-010"
+      ],
+      "adversary_scenarios": [
+        "ADV-010",
+        "ADV-011",
+        "ADV-012",
+        "ADV-013",
+        "ADV-014",
+        "ADV-015",
+        "ADV-016"
+      ],
+      "detections": [
+        "DET-013",
+        "DET-014",
+        "DET-015",
+        "DET-016",
+        "DET-017",
+        "DET-018",
+        "DET-019",
+        "DET-020"
+      ],
+      "iac_controls": [],
+      "tests": [
+        "lab/tests/supply-chain-security-test.sh",
+        "lab/tests/supply-chain-detection-live.sh",
+        "lab/tests/supply-chain-detection-test.py",
+        "lab/tests/deployment-gate-test.sh",
+        "lab/tests/deployment-detection-live.sh",
+        "lab/tests/deployment-detection-test.py"
+      ],
+      "documentation": [
+        "docs/supply-chain/software-supply-chain-security.md",
+        "docs/supply-chain/deployment-approval-gate.md",
+        "docs/adversary/attack-path-coverage.md"
+      ],
+      "scope_note": "Validates trusted build, provenance, independent verification, approval and deployment-gate control paths.",
+      "limitations": [
+        "AP-004 remains substantially rather than fully validated.",
+        "No production registry admission control.",
+        "No hosted-runner compromise validation.",
+        "No mandatory human approval validation."
+      ]
+    },
+    {
+      "id": "EVID-005",
+      "name": "Infrastructure Policy as Code Validation",
+      "assurance_status": "VALIDATED",
+      "supports_security_requirements": [
+        "SR-007",
+        "SR-011",
+        "SR-013",
+        "SR-014",
+        "SR-017",
+        "SR-018",
+        "SR-021",
+        "SR-023",
+        "SR-024",
+        "SR-025"
+      ],
+      "risks": [
+        "R-003",
+        "R-004",
+        "R-006",
+        "R-008",
+        "R-009",
+        "R-011"
+      ],
+      "attack_paths": [],
+      "objectives": [
+        "SO-003",
+        "SO-004",
+        "SO-007",
+        "SO-010",
+        "SO-011",
+        "SO-012"
+      ],
+      "controls": [
+        "CTRL-005",
+        "CTRL-014"
+      ],
+      "adversary_scenarios": [],
+      "detections": [],
+      "iac_controls": [
+        "IAC-001",
+        "IAC-002",
+        "IAC-003",
+        "IAC-004",
+        "IAC-005",
+        "IAC-006",
+        "IAC-007",
+        "IAC-008",
+        "IAC-009",
+        "IAC-010",
+        "IAC-011"
+      ],
+      "tests": [
+        "infrastructure/tests/policy-test.py",
+        "infrastructure/tests/real-plan-test.py",
+        "infrastructure/tests/ci-gate-test.sh"
+      ],
+      "documentation": [
+        "docs/iac/iac-control-validation-matrix.md",
+        "docs/iac/infrastructure-security-governance.md",
+        "docs/iac/phase-11-acceptance.md"
+      ],
+      "scope_note": "Validates security policy against generated OpenTofu infrastructure plans before deployment eligibility.",
+      "limitations": [
+        "Does not validate live-cloud drift.",
+        "Does not represent a production AWS deployment.",
+        "Attack-path relationships are supporting rather than direct validation."
+      ]
+    },
+    {
+      "id": "EVID-006",
+      "name": "Incident Response Pipeline Validation",
+      "assurance_status": "VALIDATED",
+      "supports_security_requirements": [
+        "SR-011",
+        "SR-012",
+        "SR-019",
+        "SR-021",
+        "SR-022",
+        "SR-023"
+      ],
+      "risks": [],
+      "attack_paths": [],
+      "objectives": [
+        "SO-007",
+        "SO-008",
+        "SO-009",
+        "SO-012"
+      ],
+      "controls": [
+        "CTRL-010"
+      ],
+      "adversary_scenarios": [],
+      "detections": [],
+      "iac_controls": [],
+      "tests": [
+        "lab/tests/incident-recovery-test.sh"
+      ],
+      "documentation": [
+        "docs/incident-response/incident-response-workflow.md"
+      ],
+      "scope_note": "Validates conversion of security alerts into structured incident records and simulated containment decisions.",
+      "limitations": [
+        "Containment actions are simulated.",
+        "The responder does not modify production identity or network controls."
+      ]
+    }
+  ]
+}

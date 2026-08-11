@@ -1,0 +1,61 @@
+{
+  "schema": "project-redoubt.assurance-source-registry/v1",
+  "sources": [
+    {
+      "entity": "business_requirement",
+      "prefix": "BR",
+      "path": "docs/enterprise/business-requirements.md",
+      "expected_count": 10,
+      "first_id": 1,
+      "last_id": 10
+    },
+    {
+      "entity": "security_requirement",
+      "prefix": "SR",
+      "path": "docs/enterprise/business-requirements.md",
+      "expected_count": 25,
+      "first_id": 1,
+      "last_id": 25
+    },
+    {
+      "entity": "crown_jewel",
+      "prefix": "CJ",
+      "path": "docs/security/crown-jewels.md",
+      "expected_count": 10,
+      "first_id": 1,
+      "last_id": 10
+    },
+    {
+      "entity": "risk",
+      "prefix": "R",
+      "path": "docs/security/risk-register.md",
+      "expected_count": 12,
+      "first_id": 1,
+      "last_id": 12
+    },
+    {
+      "entity": "security_objective",
+      "prefix": "SO",
+      "path": "docs/security/security-objectives.md",
+      "expected_count": 12,
+      "first_id": 1,
+      "last_id": 12
+    },
+    {
+      "entity": "attack_path",
+      "prefix": "AP",
+      "path": "threat-model/attack-paths.md",
+      "expected_count": 8,
+      "first_id": 1,
+      "last_id": 8
+    },
+    {
+      "entity": "architecture_decision",
+      "prefix": "ADR",
+      "path": "docs/adr",
+      "expected_count": 12,
+      "first_id": 1,
+      "last_id": 12
+    }
+  ]
+}

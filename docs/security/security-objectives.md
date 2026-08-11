@@ -40,6 +40,7 @@ ResTech must prevent a single compromised user identity from automatically provi
 - SR-002 Least Privilege
 - SR-003 No Implicit Network Trust
 - SR-004 Central Identity
+- SR-015 Device Context
 
 ### Protects
 
@@ -107,6 +108,7 @@ Sensitive ResTech information must only be accessible to explicitly authorised i
 ### Supports
 
 - SR-002 Least Privilege
+- SR-008 Direct Database Access
 - SR-017 Data Classification
 - SR-018 Encryption
 
@@ -236,6 +238,7 @@ Project Redoubt must reduce the blast radius of successful initial compromise.
 
 - SR-007 Segmentation
 - SR-014 Default Deny
+- SR-019 Incident Response
 - SR-024 Attack Containment
 
 ### Success Criteria

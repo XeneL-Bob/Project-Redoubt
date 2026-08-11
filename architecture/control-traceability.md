@@ -163,3 +163,55 @@ Evidence
 ```
 
 This traceability chain is a core Project Redoubt deliverable.
+
+---
+
+## 5. Architecture Assurance
+
+Phase 13 extends the Project Redoubt traceability chain to include architecture decisions, validation evidence and explicit assurance status.
+
+```text
+Business Requirement
+        ↓
+Security Requirement
+        ↓
+Crown Jewel
+        ↓
+Risk
+        ↓
+Threat / Attack Path
+        ↓
+Security Objective
+        ↓
+Architecture Decision
+        ↓
+Architecture Control
+        ↓
+Implementation
+        ↓
+Test / Adversary Scenario
+        ↓
+Detection
+        ↓
+Evidence
+        ↓
+Assurance Status
+```
+
+Machine-readable assurance artefacts are maintained under:
+
+- `assurance/source-registry.json`
+- `assurance/validation-source-registry.json`
+- `assurance/traceability-graph.json`
+- `assurance/evidence-catalog.json`
+- `assurance/coverage-report.json`
+- `assurance/final-assessment.json`
+
+Human-readable assurance assessments are maintained under:
+
+- `docs/assurance/coverage-and-gaps.md`
+- `docs/assurance/final-assurance-assessment.md`
+
+The assurance model does not require every control or attack path to be labelled validated.
+
+Known limitations remain explicit where the laboratory does not provide sufficient evidence.
