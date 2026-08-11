@@ -25,6 +25,7 @@ This prevents controls from being introduced without a documented reason.
 | Tamper-resistant logs | R-008 | AP-008 | Security |
 | Isolated backups | R-009 | AP-005 | Recovery |
 | Contractor expiry | R-010 | AP-007 | Identity |
+| Infrastructure policy gate | R-003, R-004, R-006, R-008, R-009, R-011 | AP-003, AP-004, AP-005, AP-008 | Infrastructure / Governance |
 
 ---
 
@@ -116,6 +117,10 @@ Architecture:
 - policy as code
 - version control
 - automated negative tests
+- OpenTofu machine-readable plans
+- OPA infrastructure guardrails
+- real misconfiguration plan validation
+- CI policy enforcement
 
 ### SO-012 Produce Security Evidence
 
@@ -125,6 +130,11 @@ Architecture:
 - telemetry
 - test results
 - evidence repository
+- infrastructure plan hashes
+- policy hashes
+- provider lockfile hashes
+- machine-readable policy decisions
+- CI evidence artifacts
 
 ---
 

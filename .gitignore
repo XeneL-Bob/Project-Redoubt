@@ -77,3 +77,12 @@ lab/.env
 
 # Project Redoubt software supply-chain runtime
 lab/supply-chain/runtime/
+
+# Phase 11 — OpenTofu / IaC runtime
+**/.terraform/
+*.tfstate
+*.tfstate.*
+*.tfplan
+infrastructure/runtime/
+crash.log
+crash.*.log

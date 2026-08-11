@@ -140,3 +140,29 @@ Attack Simulation
      ↓
 Evidence
 ```
+
+---
+
+## Phase 11 Extension — Infrastructure Governance
+
+Phase 11 extends the original security architecture into declarative infrastructure governance.
+
+The architecture now includes an Infrastructure Governance capability:
+
+    Security Architecture
+            ↓
+    OpenTofu
+            ↓
+    Infrastructure Plan
+            ↓
+    OPA Policy
+            ↓
+    ALLOW / DENY
+            ↓
+    CI Evidence
+
+This capability ensures that selected architectural invariants are evaluated automatically before infrastructure changes become eligible for deployment.
+
+The Infrastructure Governance capability does not replace the Identity, Policy, Enforcement, Management, Telemetry or Recovery planes.
+
+It governs how infrastructure supporting those planes may be changed.
