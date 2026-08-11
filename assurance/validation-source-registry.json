@@ -1,0 +1,29 @@
+{
+  "schema": "project-redoubt.validation-source-registry/v1",
+  "sources": [
+    {
+      "entity": "adversary_scenario",
+      "prefix": "ADV",
+      "path": "docs/adversary/control-validation-matrix.md",
+      "expected_count": 16,
+      "first_id": 1,
+      "last_id": 16
+    },
+    {
+      "entity": "detection",
+      "prefix": "DET",
+      "path": "docs/detection/detection-catalog.md",
+      "expected_count": 20,
+      "first_id": 1,
+      "last_id": 20
+    },
+    {
+      "entity": "iac_control",
+      "prefix": "IAC",
+      "path": "docs/iac/iac-control-validation-matrix.md",
+      "expected_count": 11,
+      "first_id": 1,
+      "last_id": 11
+    }
+  ]
+}

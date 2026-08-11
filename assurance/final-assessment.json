@@ -1,0 +1,42 @@
+{
+  "schema": "project-redoubt.final-assurance-assessment/v1",
+  "traceability": {
+    "business_requirements_mapped": "10/10",
+    "security_requirements_mapped": "25/25",
+    "risks_mapped_to_crown_jewels": "12/12",
+    "security_objectives_mapped_to_adrs": "12/12",
+    "architecture_controls_mapped_to_adrs": "13/14"
+  },
+  "technical_assurance": {
+    "risks_with_validation_evidence": "11/12",
+    "attack_paths_with_validation_evidence": "7/8",
+    "architecture_controls_with_validation_evidence": "11/14",
+    "attack_path_statuses": {
+      "PARTIALLY_VALIDATED": 5,
+      "SUBSTANTIALLY_VALIDATED": 2,
+      "DEFERRED": 1
+    }
+  },
+  "accepted_residual_gaps": {
+    "risk_without_validation_evidence": [
+      "R-012"
+    ],
+    "attack_path_without_validation_evidence": [
+      "AP-006"
+    ],
+    "controls_without_direct_validation_evidence": [
+      "CTRL-001",
+      "CTRL-011",
+      "CTRL-013"
+    ],
+    "control_without_adr": [
+      "CTRL-013"
+    ],
+    "risks_without_explicit_detection_mapping": [
+      "R-009",
+      "R-010",
+      "R-012"
+    ]
+  },
+  "assurance_conclusion": "Traceability defects identified during Phase 13C were repaired where supported by existing architecture. Remaining gaps are retained as explicit technical or assurance limitations rather than being represented as validated."
+}
